@@ -5,27 +5,38 @@ import {Data} from "../data/data"
   providedIn: 'root'
 })
 export class ServiceService {
-  constructor(private data: Data) {}
+  product: any;
+  order_details: any[]
+  constructor(private data: Data) {
+    this.product = this.data.User();
+    this.order_details = []
+  }
 
+  addOrder(order_detail: any) {
+    this.order_details.push(order_detail);
+  }
+  getOrder(){
+    return this.order_details
+  }
 
   getDatas(){
-    return this.data.User()
+    return this.product;
   }
   createData(data : any[], value : any)
   {
     data.push(value);
   }
-  deleteDatas(data: any[], index: number)
+  deleteDatas(index: number)
   {
-    data.splice(index, 1);    
+    this.product.splice(index, 1);    
   }
-  Details(data : any[], index: number)
+  Details( index: number)
   {
-    return data[index]
+    return this.product[index]
   }
-  update(data : any[], index : number, value: any)
+  update(index : number, value: any)
   {
-    data[index] = value;
+    this.product[index] = value;
   }
 
 }

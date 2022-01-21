@@ -11,5 +11,8 @@ export class EditComponent implements OnInit {
 
   ngOnInit(): void {
   }
+  change(event: any){
+    console.log(event.target)
+  }
 
 }

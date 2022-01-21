@@ -1,0 +1,118 @@
+<section class="section-content padding-y">
+    <div class="container">
+    
+    <div class="row" style="margin-top: 27px !important;">
+        <aside class="col-md-3">
+            
+    <div class="card">
+        <article class="filter-group">
+            <header class="card-header">
+                <a href="#" data-toggle="collapse" data-target="#collapse_1" aria-expanded="true" class="">
+                  
+                    <h6 class="title">Category</h6>
+                </a>
+            </header>
+            <div class="filter-content collapse show" id="collapse_1" >
+                <div class="card-body">
+                    <form class="pb-3">
+                    <div class="input-group">
+                      <input type="text" class="form-control" placeholder="Search">
+                      <div class="input-group-append">
+                        <button class="btn btn-light" type="button" style="position: relative;
+                        top: -3px;"><i class="fa fa-search"></i></button>
+                      </div>
+                    </div>
+                    </form>
+                    
+                   
+    
+                </div> <!-- card-body.// -->
+            </div>
+        </article> <!-- filter-group  .// -->
+        <article class="filter-group">
+         
+            <div class="filter-content collapse show" id="collapse_2">
+                <div class="card-body">
+                    <label class="custom-control custom-checkbox" *ngFor="let category of categories">
+                      <input type="checkbox" class="custom-control-input" (change)="change(category.name)"
+                      [checked]="category.name === currentCheck">
+                      <div class="custom-control-label">{{category.name}}  
+                    </div>
+                    </label>
+                   
+        </div> <!-- card-body.// -->
+            </div>
+        </article> <!-- filter-group .// -->
+        <article class="filter-group">
+            
+            <div class="filter-content collapse show" id="collapse_3">
+                <div class="card-body">
+                  
+                    <button class="btn btn-block btn-primary" (click)="apply()">Apply</button>
+                </div><!-- card-body.// -->
+            </div>
+        </article> <!-- filter-group .// -->
+     
+    </div> <!-- card.// -->
+    
+    </aside> <!-- col.// -->
+    <main class="col-md-9">
+    
+    <header class="border-bottom mb-4 pb-3">
+            <div class="form-inline">
+                <span class="mr-md-auto">Sort by</span>
+                <select class="mr-2 form-control" (change)="select($event.target)">
+                    <option>Price A-Z</option>
+                    <option>Price Z-A</option>
+                    <option>Ended At A-Z</option>
+                    <option>Ended At Z-A</option>
+                </select>
+              
+            </div>
+    </header><!-- sect-heading -->
+    
+    <div class="row">
+        <div class="col-md-4" *ngFor="let product of products">
+            <div *ngIf="loading">
+                <div class="preloader3">
+                  <div class="circ1"></div>
+                  <div class="circ2"></div>
+                  <div class="circ3"></div>
+                  <div class="circ4"></div>
+                </div>
+              </div>
+            <figure class="card card-product-grid">
+                <div class="img-wrap"> 
+                    <span class="badge badge-danger"> NEW </span>
+                    <img src={{product.img}}>
+                    <a class="btn-overlay" href="#"><i class="fa fa-search-plus"></i> Quick view</a>
+                </div> <!-- img-wrap.// -->
+                <figcaption class="info-wrap">
+                    <div class="fix-height">
+                        <a href="#" class="title">{{product.name}}</a>
+                        <div class="price-wrap mt-2">
+                            <span class="price">{{product.price}}$</span>
+                        </div> <!-- price-wrap.// -->
+                        <p>{{product.date_bid}}</p>
+                    </div>
+                    <a href="#" class="btn btn-block btn-primary" style="color: white">Bide Now</a>
+                </figcaption>
+            </figure>
+        </div> 
+    </div>
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <ngb-pagination
+            [pageSize] = "pagesize"
+            [collectionSize]="totalItems"
+            [boundaryLinks]="true"
+            [(page)]="currentPage"
+            (pageChange)="onPageChange(currentPage)"
+            [maxSize]="maxSize"
+            ></ngb-pagination>
+          </div>
+    </div>
+    </main> 
+    </div>
+    </div> <!-- container .//  -->
+ </section>

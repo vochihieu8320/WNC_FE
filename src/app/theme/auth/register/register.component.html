@@ -1,0 +1,90 @@
+<div class="account section">
+    <div class="container">
+      <div class="row justify-content-center">
+        <div class="col-lg-6">
+          <div class="login-form border p-5">
+            <div class="text-center heading">
+              <h2 class="mb-2">Register</h2>
+            </div>
+            <form action="#" class="mt-5" #validationForm="ngForm" *ngIf="formRegister">
+              <div class="form-group mb-4">
+                    <label for="#">Name</label>
+                    <input type="text" class="form-control" placeholder="Enter name"
+                    name="name"  
+                    [ngClass]="{'is-invalid': !name.valid && (name.dirty || name.touched || isSubmit)}" 
+                    #name="ngModel" minlength="6" required [(ngModel)]="formRegister.name">
+                    <label *ngIf="!name.valid && (name.dirty || name.touched || isSubmit)" 
+                    id="validation-name-error" 
+                    class="error jquery-validation-error small form-text invalid-feedback">Please enter a valid name.</label>
+                  </div>
+              <div class="form-group mb-4">
+                <label for="#">Email</label>
+                <input type="email" class="form-control" placeholder="Enter Email"
+                name="email"  
+                [ngClass]="{'is-invalid': !email.valid && (email.dirty || email.touched || isSubmit)}" 
+                #email="ngModel" minlength="6" required [(ngModel)]="formRegister.email">
+                <label *ngIf="!email.valid && (email.dirty || email.touched || isSubmit)" 
+                id="validation-name-error" 
+                class="error jquery-validation-error small form-text invalid-feedback">Please enter a valid email.</label>
+              </div>
+              <div class="form-group mb-4" *ngIf="formRegister.email">
+                <div class="row">
+                  <div class="col-md-8">
+                    <label for="#">OTP</label>
+                    <input type="email" class="form-control" placeholder="Click to get otp"
+                    name="otp"  
+                    [ngClass]="{'is-invalid': !otp.valid && (otp.dirty || otp.touched || isSubmit)}" 
+                    #otp="ngModel" minlength="1" required [(ngModel)]="formOIP.otp">
+                    <label *ngIf="!otp.valid && (otp.dirty || otp.touched || isSubmit)" 
+                    id="validation-name-error" 
+                    class="error jquery-validation-error small form-text invalid-feedback">Please enter a valid otp.</label>
+                  </div>
+                  <div class="col mt-2">
+                    <a class="btn btn-main btn-sm mt-3 btn-block" style="color:white"
+                    (click)="getOTP()">Get OTP</a>
+                  </div>
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="#">Password</label>
+                <input type="password" class="form-control" placeholder="Enter Password"
+                name="password"  
+                [ngClass]="{'is-invalid': !password.valid && (password.dirty || password.touched || isSubmit)}" 
+                #password="ngModel" minlength="6" required [(ngModel)]="formRegister.password"
+                >
+                <label *ngIf="!password.valid && (password.dirty || password.touched || isSubmit)" 
+                id="validation-name-error" 
+                class="error jquery-validation-error small form-text invalid-feedback">Please enter a valid password.</label>
+              </div>
+              <div class="form-group">
+                <label for="#">Password Confirmation</label>
+                <input type="password" class="form-control" placeholder="Enter Password Confirmation"
+                name="password_confirmation"  
+                [ngClass]="{'is-invalid': !password_confirmation.valid && 
+                (password_confirmation.dirty || password_confirmation.touched || isSubmit)}" 
+                #password_confirmation="ngModel" minlength="6" required [(ngModel)]="formRegister.password_confirmation"> 
+                <label *ngIf="!password_confirmation.valid && (password_confirmation.dirty || password_confirmation.touched || isSubmit)" 
+                id="validation-name-error" 
+                class="error jquery-validation-error small form-text invalid-feedback">Please enter a valid password confirmation.</label>
+              </div>
+              <a class="btn btn-main mt-3 btn-block" style="color:white"
+              (click)="register()">Register</a>
+            </form>
+            <div *ngIf="!loading && !!error" class="alert alert-danger icons-alert mt-2">{{error}}</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-12 ">
+        <div *ngIf="loading">
+          <div class="preloader3">
+            <div class="circ1"></div>
+            <div class="circ2"></div>
+            <div class="circ3"></div>
+            <div class="circ4"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>

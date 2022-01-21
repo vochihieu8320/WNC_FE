@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import {ServiceService} from '../../../service/service.service';
+import { Router, ActivatedRoute} from '@angular/router';
+import {ProductService} from '../../../service/product/product.service'
 @Component({
   selector: 'app-get',
   templateUrl: './get.component.html',
@@ -7,16 +8,46 @@ import {ServiceService} from '../../../service/service.service';
 })
 export class GetComponent implements OnInit {
   products: any[] = [];
-  constructor(private service: ServiceService) {
-    this.products = <any>this.service.getDatas();
-    console.log(this.products);
+  name:any;
+  formSearch: any;
+  best_price:any;
+  last_minute: any;
+  hot_trends: any;
+  loading: boolean = false;
+  constructor(private service: ProductService, private router: Router, private route: ActivatedRoute) {
+  
   }
 
-  ngOnInit(): void {
+  async ngOnInit(){
+    this.formSearch = {
+      name: ""
+    }
+    this.loading = true;
+    this.hot_trends = <any> await this.service.hot_trends();
+    this.last_minute = <any> await this.service.last_minute();
+    for(let i = 0; i < this.last_minute.length; i++) {
+     const auction = await this.service.auction(this.last_minute[i]._id);
+     this.last_minute[i]["auction"] = auction
+    }
+    console.log(this.last_minute)
+    this.best_price = <any> await this.service.best_price();
+    this.loading = false;
   }
 
   details(products: any, index: any)
   {
-    console.log(index)
+    this.router.navigate([`products/${index}`]);
   }
+  login(){
+    this.router.navigate([`auth/login`]);
+  }
+  search(){
+    this.router.navigate(
+      ['/products/search'],
+      { queryParams: { name: this.formSearch.name } }
+    );
+  }
+ view(productID: any){
+  this.router.navigate([`products/${productID}`]);
+ }
 }

@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { GetComponent } from './get.component';
 import {GetRoutingModule} from './get.routing.module'
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 
 @NgModule({
@@ -10,7 +11,9 @@ import {GetRoutingModule} from './get.routing.module'
   ],
   imports: [
     CommonModule,
-    GetRoutingModule  
+    GetRoutingModule,
+    FormsModule,
+    ReactiveFormsModule,
   ]
 })
 export class GetModule { }

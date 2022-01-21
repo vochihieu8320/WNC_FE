@@ -14,6 +14,14 @@ const routes: Routes = [
       {
         path: 'products',
         loadChildren: () => import("./theme/products/products.module").then(m => m.ProductsModule)
+      },
+      {
+        path: 'auth',
+        loadChildren: () => import("./theme/auth/auth.module").then(m => m.AuthModule)
+      },
+      {
+        path: 'user',
+        loadChildren: () => import("./theme/user/user.module").then(m => m.UserModule)
       }
     ]
 

@@ -1,56 +1,327 @@
-<section class="section-main bg padding-y">
-    <div class="container">
-    
+<article class="banner-wrap">
+  <img src="assets/images/slide_01.jpg" class="w-100 rounded">
+</article>
+<div id="preloader" *ngIf="loading">
+  <div class="jumper">
+      <div></div>
+      <div></div>
+      <div></div>
+  </div>
+</div>  
+<section class="w3l-subscription-6">
+	<!--/customers -->
+	<div class="subscription-infhny">
+		<div class="container-fluid">
+
+			<div class="subscription-grids row justify-content-center">
+
+				<div class="subscription-right form-right-inf col-lg-6 p-md-5 p-4">
+					<div class="p-lg-5 py-md-0 py-3">
+						<form method="post" class="signin-form mt-lg-5 mt-4"  #validationForm="ngForm" *ngIf="formSearch">
+							<div class="forms-gds">
+								<div class="form-input">
+									<input type="text" name="name" #name="ngModel" placeholder="Search for products or category" required
+                  [(ngModel)]="formSearch.name">
+								</div>
+								<div class="form-input"><button class="btn" (click)="search()">Search</button></div>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+
+			<!--//customers -->
+		</div>
+  </div>
+</section>
+
+<section class="w3l-grids-hny-2">
+	<div class="grids-hny-2-mian py-5">
+		<div class="container py-lg-5">
+			<h3 class="hny-title mb-0 text-center">Handpicked Favourites just for you</h3>
+			<div class="welcome-grids row mt-5">
+				<div class="col-lg-2 col-md-4 col-6 welcome-image">
+						<div class="boxhny13">
+								<a href="#URL">
+										<img src="assets/images/grid1.jpg" class="img-fluid" alt="" />
+								<div class="boxhny-content">
+									<h3 class="title">Product</h3>
+								</div>
+							</a>
+						</div>
+						<h4><a href="#URL">Hand Bags</a></h4>
+
+				</div>
+				
+				<div class="col-lg-2 col-md-4 col-6 welcome-image">
+						<div class="boxhny13">
+								<a href="#URL">
+										<img src="assets/images/grid3.jpg" class="img-fluid" alt="" />
+								<div class="boxhny-content">
+									<h3 class="title">Product</h3>
+								</div>
+							</a>
+						</div>
+						<h4><a href="#URL">
+								Watches</a></h4>
+
+					
+				</div>
+				<div class="col-lg-2 col-md-4 col-6 welcome-image">
+						<div class="boxhny13">
+								<a href="#URL">
+										<img src="assets/images/grid2.jpg" class="img-fluid" alt="" />
+								<div class="boxhny-content">
+									<h3 class="title">Product</h3>
+								</div>
+							</a>
+						</div>
+						<h4><a href="#URL">Shoes</a></h4>
+
+				
+				</div>
+				<div class="col-lg-2 col-md-4 col-6 welcome-image">
+						<div class="boxhny13">
+								<a href="#URL">
+										<img src="assets/images/grid4.jpg" class="img-fluid" alt="" />
+								<div class="boxhny-content">
+									<h3 class="title">Product</h3>
+								</div>
+							</a>
+						</div>
+						<h4><a href="#URL">Suits</a></h4>
+
+				</div>
+				<div class="col-lg-2 col-md-4 col-6 welcome-image">
+						<div class="boxhny13">
+								<a href="#URL">
+										<img src="assets/images/grid5.jpg" class="img-fluid" alt="" />
+								<div class="boxhny-content">
+									<h3 class="title">Product</h3>
+								</div>
+							</a>
+						</div>
+						<h4><a href="#URL">
+								Accessories</a></h4>
+
+					
+				</div>
+				<div class="col-lg-2 col-md-4 col-6 welcome-image">
+						<div class="boxhny13">
+								<a href="#URL">
+										<img src="assets/images/grid6.jpg" class="img-fluid" alt="" />
+								<div class="boxhny-content">
+									<h3 class="title">Product</h3>
+								</div>
+							</a>
+						</div>
+						<h4><a href="#URL">
+								Fragrances</a></h4>
+
+					
+				</div>
+			</div>
+
+		</div>
+	</div>
+</section>
+
+<div class="latest-products">
+  <div class="container">
     <div class="row">
-        <aside class="col-md-3">
-            <nav class="card">
-                <ul class="menu-category">
-                    <li><a href="#">Best clothes</a></li>
-                    <li><a href="#">Automobiles</a></li>
-                    <li><a href="#">Home interior</a></li>
-                    <li><a href="#">Electronics</a></li>
-                    <li><a href="#">Technologies</a></li>
-                    <li><a href="#">Digital goods</a></li>
-                    <li class="has-submenu"><a href="#">More items</a>
-                        <ul class="submenu">
-                            <li><a href="#">Submenu name</a></li>
-                            <li><a href="#">Great submenu</a></li>
-                            <li><a href="#">Another menu</a></li>
-                            <li><a href="#">Some others</a></li>
-                        </ul>
-                    </li>
-                </ul>
-            </nav>
-        </aside> <!-- col.// -->
-        <div class="col-md-9">
-            <article class="banner-wrap">
-                <img src="assets/images/2.jpg" class="w-100 rounded">
-            </article>
-        </div> <!-- col.// -->
-    </div> <!-- row.// -->
-    </div> <!-- container //  -->
-    </section>
-    <section class="section-name padding-y-sm">
-    <div class="container">
-    
-    <header class="section-heading">
-        <a href="#" class="btn btn-outline-primary float-right">See all</a>
-        <h3 class="section-title">Popular products</h3>
-    </header><!-- sect-heading -->
-    
-        
+      <div class="col-md-12">
+        <div class="section-heading">
+          <h2>Hot trends</h2>
+          
+        </div>
+      </div>
+      <div class="col" *ngFor="let product of hot_trends">
+        <div class="product-item card-product-grid">
+          <div class="img-wrap" style="height:auto;"> 
+            <span class="badge badge-danger"> Hot trends</span>
+           
+            <a href="#"><img src={{product.img}} alt=""></a>
+            <a class="btn-overlay" (click)="view(product._id)" style="cursor:pointer; color:white">
+              <i class="fa fa-search-plus"></i> Quick view</a>
+        </div> 
+          <div class="down-content">
+            <a href="#"><h4>{{product.name}}</h4></a>
+            <h6>{{product.auction.min_price}}$</h6>
+            <p>{{product.auction.amount_bider_bide}} Bids </p>
+            <p>Ended At: {{product.createdAt| date:'short'}}</p>
+              <div class="col-md-12 text-center">
+                <a class="btn" (click)="view(product._id)" style="color:white">Bide Now</a>
+              </div>          
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="latest-products">
+  <div class="container">
     <div class="row">
-        <div class="col-md-3" *ngFor="let product of products; index as i">
-            <div href="#" class="card card-product-grid">
-                <a href="#" class="img-wrap"> <img src={{product.url}} alt="product"  (click)="details(product, i)"/> 
-                </a>
-                <figcaption class="info-wrap" (click)="details(product, i)">
-                    <a href="#" class="title">{{product.name}}</a>
-                    <div class="price mt-1">$179.00</div> <!-- price-wrap.// -->
-                </figcaption>
+      <div class="col-md-12">
+        <div class="section-heading">
+          <h2>Best Price</h2>
+        </div>
+      </div>
+      <div class="col" *ngFor="let product of best_price">
+        <div class="product-item card-product-grid">
+          <div class="img-wrap" style="height:auto;"> 
+            <span class="badge badge-danger"> Best Price</span>
+           
+            <a href="#"><img src={{product.img}} alt=""></a>
+            <a class="btn-overlay" (click)="view(product._id)" style="cursor:pointer;color:white" ><i class="fa fa-search-plus"></i> Quick view</a>
+        </div> 
+          <div class="down-content">
+            <a href="#"><h4>{{product.name}}</h4></a>
+            <h6>{{product.auction.min_price}}$</h6>
+            <p>{{product.auction.amount_bider_bide}} Bids </p>
+            <p>Ended At: {{product.createdAt| date:'short'}}</p>
+              <div class="col-md-12 text-center">
+                <a class="btn" (click)="view(product._id)" style="color:white">Bide Now</a>
+              </div>          
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="latest-products">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="section-heading">
+          <h2>Last Minute</h2>
+        </div>
+      </div>
+      <div class="col" *ngFor="let product of last_minute">
+        <div class="product-item card-product-grid" *ngIf="product.auction">
+          <div class="img-wrap" style="height:auto;"> 
+            <span class="badge badge-danger"> Last Minute</span>
+           
+            <a><img src={{product.img}} alt=""></a>
+            <a class="btn-overlay" (click)="view(product._id)" style="cursor:pointer; color:white">
+              <i class="fa fa-search-plus"></i> Quick view</a>
+        </div> 
+          <div class="down-content">
+            <a href="#"><h4>{{product.name}}</h4></a>
+            <h6>{{product.auction.min_price}}$</h6>
+
+            <p>{{product.auction.amount_bider_bide}} Bids </p>
+            <p>Ended At: {{product.createdAt| date:'short'}}</p>
+              <div class="col-md-12 text-center">
+                <a class="btn" (click)="view(product._id)" style="color:white">Bide Now</a>
+              </div>          
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- <div class="products">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="filters">
+          <ul>
+              <li class="active" data-filter="*">Hot Trends</li>
+              <li data-filter=".des">Best Price</li>
+              <li data-filter=".gra">Last Minute</li>
+          </ul>
+        </div>
+      </div>
+      <div class="col-md-12">
+        <div class="filters-content">
+            <div class="row grid">
+                <div class="col-lg-4 col-md-4 all des">
+                  <div class="product-item">
+                    <a href="#"><img src="assets/images/product_02.jpg" alt=""></a>
+                    <div class="down-content">
+                      <a href="#"><h4>Tittle goes here</h4></a>
+                      <h6>$30.25</h6>
+                      <p>200 Bids </p>
+                      <p>Holder: Vo Chi Hieu</p>
+                      <p>Started At: 12/2/2021</p>
+                      <p>Ended At: 12/2/2022</p>
+                      <p>Lorem ipsume dolor sit amet, adipisicing elite. Itaque, corporis nulla aspernatur.</p>
+                        <div class="col-md-12 text-center">
+                            <a href="#" class="filled-button">Bide Now</a>
+                        </div>          
+                    </div>
+                  </div>
+                </div>
             </div>
-        </div> <!-- col.// -->
-    </div> <!-- row.// -->
-    
-    </div><!-- container // -->
-    </section>
+        </div>
+      </div>
+      <div class="col-md-12">
+        <ul class="pages">
+          <li><a href="#">1</a></li>
+          <li class="active"><a href="#">2</a></li>
+          <li><a href="#">3</a></li>
+          <li><a href="#">4</a></li>
+          <li><a href="#"><i class="fa fa-angle-double-right"></i></a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div> -->
+
+
+
+
+
+  <div class="best-features">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-12">
+          <div class="section-heading">
+            <h2>About Sixteen Clothing</h2>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="left-content">
+            <h4>Looking for the best products?</h4>
+            <p><a rel="nofollow" href="https://templatemo.com/tm-546-sixteen-clothing" target="_parent">This template</a> is free to use for your business websites. However, you have no permission to redistribute the downloadable ZIP file on any template collection website. <a rel="nofollow" href="https://templatemo.com/contact">Contact us</a> for more info.</p>
+            <ul class="featured-list">
+              <li><a href="#">Lorem ipsum dolor sit amet</a></li>
+              <li><a href="#">Consectetur an adipisicing elit</a></li>
+              <li><a href="#">It aquecorporis nulla aspernatur</a></li>
+              <li><a href="#">Corporis, omnis doloremque</a></li>
+              <li><a href="#">Non cum id reprehenderit</a></li>
+            </ul>
+            <a href="about.html" class="filled-button">Read More</a>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="right-image">
+            <img src="assets/images/feature-image.jpg" alt="">
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <div class="call-to-action">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-12">
+          <div class="inner-content">
+            <div class="row">
+              <div class="col-md-8">
+                <h4>Creative &amp; Unique <em>Sixteen</em> Products</h4>
+                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Itaque corporis amet elite author nulla.</p>
+              </div>
+              <div class="col-md-4">
+                <a href="#" class="filled-button">Purchase Now</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>

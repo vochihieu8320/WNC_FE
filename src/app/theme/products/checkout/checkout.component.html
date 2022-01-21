@@ -1,0 +1,65 @@
+<form #validationForm="ngForm" class="editForm" novalidate>
+    <div class="row justify-content-center">
+      
+      <div class="col-md-6">
+        <div class="form-group" style="text-align: left;">
+          <label class="form-label mb-2">Name</label>
+          <input type="text" class="form-control" name="name" style="color: black;"
+           placeholder="Enter name" [ngClass]="{'is-invalid': !name.valid && (name.dirty || name.touched || isSubmit)}" #name="ngModel" minlength="6" required [(ngModel)]="Checkout.name">
+          <label *ngIf="!name.valid && (name.dirty || name.touched || isSubmit)" id="validation-name-error" class="error jquery-validation-error small form-text invalid-feedback">Please enter a valid name.</label>
+        </div>
+        <div class="form-group" style="text-align: left;">
+            <label class="form-label mb-2">Phone</label>
+            <input type="text" class="form-control" name="phone" style="color: black;"
+             placeholder="Enter name" [ngClass]="{'is-invalid': !phone.valid && (phone.dirty || phone.touched || isSubmit)}" #phone="ngModel" minlength="6" required [(ngModel)]="Checkout.phone">
+            <label *ngIf="!phone.valid && (phone.dirty || phone.touched || isSubmit)" id="validation-name-error" class="error jquery-validation-error small form-text invalid-feedback">Please enter a valid name.</label>
+        </div>
+        <div class="form-group" style="text-align: left;">
+            <label class="form-label mb-2">Address</label>
+            <input type="text" class="form-control" name="address" style="color: black;"
+             placeholder="Enter name" [ngClass]="{'is-invalid': !address.valid && (address.dirty || address.touched || isSubmit)}" #address="ngModel" minlength="6" required [(ngModel)]="Checkout.address">
+            <label *ngIf="!address.valid && (address.dirty || address.touched || isSubmit)" id="validation-name-error" class="error jquery-validation-error small form-text invalid-feedback">Please enter a valid name.</label>
+        </div>
+        <div class="row mt-4">
+          <div class="col-md-1">
+            <input type="radio" id="test1" name="radio-group" checked>
+          </div>
+          <div class="col-md-8">
+            <img src="https://hstatic.net/0/0/global/design/seller/image/payment/cod.svg?v=1">
+            <span style="margin-left: 10px;">COD</span>
+          </div>
+        </div>
+        
+        <div class="row mt-4">
+          <div class="col-md-1">
+            <input type="radio" id="test2" name="radio-group" checked>
+          </div>
+          <div class="col-md-8">
+            <img src="https://hstatic.net/0/0/global/design/seller/image/payment/momo.svg?v=1">    
+            <span style="margin-left: 10px;">MoMo</span>
+          </div>
+        </div>
+        
+        <div class="row mt-4">
+          <div class="col-md-1">
+            <input type="radio" id="test2" name="radio-group" checked>
+          </div>
+          <div class="col-md-8">
+            <img src="https://hstatic.net/0/0/global/design/seller/image/payment/other.svg?v=1">    
+            <span style="margin-left: 10px;">Internet bankings</span>
+          </div>
+        </div>
+        <div class="row mt-5 justify-cotent-center">
+          <div class="col-lg-4 col-md-7 col-12">             
+                <a (click)="home()" class="btn">Continue shopping</a>
+            </div>
+            <div class="col-lg-4 col-md-7 col-12">             
+              <a (click)="checkout()" class="btn">Checkout</a>
+          </div>
+        </div>
+      </div>
+    </div>
+</form>
+
+
+  

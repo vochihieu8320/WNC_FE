@@ -1,0 +1,74 @@
+<div class="shopping-cart section">
+    <div class="container">
+      <div class="row">
+        <div class="col-12">
+          <!-- Shopping Summery -->
+          <table class="table shopping-summery">
+            <thead>
+              <tr class="main-hading">
+                <th>PRODUCT</th>
+                <th>NAME</th>
+                <th class="text-center">UNIT PRICE</th>
+                <th class="text-center">QUANTITY</th>
+                <th class="text-center">TOTAL</th> 
+                <th class="text-center"><i class="ti-trash remove-icon"></i></th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let order of orders; index as i">
+                <td class="image" data-title="No"><img src={{order.url}} alt="#" style="width: 80px"></td>
+                <td class="product-des" data-title="Description">
+                  <p class="product-name"><a>{{order.name}}</a></p>
+                 
+                </td>
+                <td class="price" data-title="Price"><span>${{order.unit_price}}</span></td>
+                <td class="qty" data-title="Qty"><!-- Input Order -->
+                  <div class="input-group">
+                    <div>
+                        <input type="number" class="form-control" id="amount" name="amount" min="1"
+                        [value] = "checkAmount(order)" (change)="amountChanged($event.target, i )"
+                        required
+                        >
+                      </div>
+                  </div>
+                  <!--/ End Input Order -->
+                </td>
+                <td class="total-amount" data-title="Total"><span>${{order.price}}</span></td>
+                <td class="action" data-title="Remove"><a href="#"><i class="ti-trash remove-icon"></i></a></td>
+              </tr>
+            
+            </tbody>
+          </table>
+          <!--/ End Shopping Summery -->
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-12">
+          <!-- Total Amount -->
+          <div class="total-amount">
+            <div class="row">
+              <div class="col-lg-8 col-md-5 col-12">
+                <div class="left">
+                  <div class="coupon">
+                   
+                  </div>
+                  
+                </div>
+              </div>
+              <div class="col-lg-4 col-md-7 col-12">
+                <div class="right">
+                 
+                  <div class="button5">
+                    <a href="#" class="btn">Checkout</a>
+                    <a href="#" class="btn">Continue shopping</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!--/ End Total Amount -->
+        </div>
+      </div>
+    </div>
+  </div>
+  <!--/ End Shopping Cart -->

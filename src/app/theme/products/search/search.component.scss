@@ -1,0 +1,72 @@
+.products ul.pages {
+    margin-top: 30px;
+    text-align: center;
+}
+
+.products ul.pages li {
+    display: inline-block;
+    margin: 0px 2px;
+}
+
+.products ul.pages li a {
+    width: 44px;
+    height: 44px;
+    display: inline-block;
+    line-height: 42px;
+    border: 1px solid #eee;
+    font-size: 15px;
+    font-weight: 700;
+    color: #121212;
+    transition: all .3s;
+}
+
+.products ul.pages li a:hover,
+.products ul.pages li.active a {
+    background-color: #f33f3f;
+    border-color: #f33f3f;
+    color: #fff;
+}
+
+preloader3 {
+    width: auto;
+    height: 130px;
+    text-align: center;
+    font-size: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    > div {
+        margin: 2px;
+        background-color: blueviolet;
+        height: 10px;
+        width: 10px;
+        border-radius: 50%;
+        display: inline-block;
+        -webkit-animation: stretchdelay 0.7s infinite ease-in-out;
+        animation: stretchdelay 0.7s infinite ease-in-out;
+    }
+    .circ2 {
+        -webkit-animation-delay: -0.6s;
+        animation-delay: -0.6s;
+    }
+    .circ3 {
+        -webkit-animation-delay: -0.5s;
+        animation-delay: -0.5s;
+    }
+    .circ4 {
+        -webkit-animation-delay: -0.4s;
+        animation-delay: -0.4s;
+    }
+    .circ5 {
+        -webkit-animation-delay: -0.3s;
+        animation-delay: -0.3s;
+    }
+    .loader-md {
+        height: 13px;
+        width: 13px;
+    }
+    .loader-lg {
+        height: 18px;
+        width: 18px;
+    }
+}
