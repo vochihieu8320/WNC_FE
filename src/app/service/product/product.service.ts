@@ -94,4 +94,11 @@ export class ProductService {
     await this.CreateHeader();
     return this.http.get(`${environment.apiUrl}/users/${userID}`, {headers: this.Header}).toPromise(); 
   }
+
+  async delete_history(id : string){
+    await this.CreateHeader();
+    return this.http.get(`${environment.apiUrl}/auction-history/${id}`, {headers: this.Header}).toPromise(); 
+  }
+  
+
 }

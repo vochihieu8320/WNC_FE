@@ -26,7 +26,9 @@
                                       <!-- Description -->
                                       <div class="short">
                                           <h4>{{product.name}}</h4>
-                                          <div class="rating-main">
+                                          <span class="badge badge-danger" *ngIf="current_bid && current_bid.auto_bide == 1">Đấu giá tự động</span>
+                                          <span class="badge badge-danger" *ngIf="current_bid && current_bid.auto_bide == 0">Đấu giá thủ công</span>
+                                          <div class="rating-main mt-2">
                                               <span>{{product.auction.amount_bider_bide}} Lượt ra giá</span>
                                           </div>
                                           <p class="price"><span>Giá hiện tại: ${{product.auction.min_price}}</span>
@@ -47,28 +49,49 @@
                                       </div>
                                       <!--/ End Description -->
                                       <!-- Color -->
-                                      <div class="color mt-5">
-                                          <h4>Thông tin khác<span>Ngày bán</span></h4>
+                                      <div style="margin-top:10px">
+                                          <h4>Thông tin khác</h4>
                                           <ul>
-                                              <span> {{ product.date_add }}</span>
+                                              <li>
+                                                <span>Ngày bán</span>
+                                                <span> {{ product.date_add }}</span>
+                                              </li>
+                                              <li>
+                                                <span>Ngày kết thúc</span>
+                                                <span> {{ product.date_bid }}</span>
+                                              </li>
+                                              <li style="position: relative;
+                                              top: -20px;">
+                                                <span>Holder</span>
+                                                
+                                                  <span style="margin-left:8px">{{holder}}</span>
+                                                  <ul class="rating" >
+                                                    <li><i class="fa fa-star"></i></li>
+                                                    <li><i class="fa fa-star"></i></li>
+                                                    <li><i class="fa fa-star"></i></li>
+                                                    <li><i class="fa fa-star-half-o"></i></li>
+                                                    <li class="dark"><i class="fa fa-star-o"></i></li>
+                                                
+                                                </ul>                       
+                                              </li>
                                           </ul>
                                       </div>
                                    
-                                      <div class="size" style="position: relative;
+                                      <!-- <div class="size" style="position: relative;
                                       top: 7px;">
                                           <h4>Ngày kết thúc</h4>
                                           <ul>
                                             <span style="position: relative;
                                             top: -7px;">{{ product.date_bid }}</span>
                                           </ul>
-                                      </div>
-                                      <div class="size" style="margin-left: 150px;
+                                      </div> -->
+                                      <!-- <div class="size" style="margin-left: 150px;
                                       position: relative;
                                          top: 15px;">
                                         <h4>Current holder</h4>         
                                         <ul style="position: relative;
                                         top: -18px;">
-                                          <span>Hieu</span>
+                                          <span>{{holder}}</span>
                                           <ul class="rating ml-2" >
                                             <li><i class="fa fa-star"></i></li>
                                             <li><i class="fa fa-star"></i></li>
@@ -77,12 +100,13 @@
                                             <li class="dark"><i class="fa fa-star-o"></i></li>
                                         </ul>
                                         </ul>                               
-                                      </div>
+                                      </div> -->
                                       <!--/ End Size -->
                                       <!-- Product Buy -->
                                       <div class="product-buy">
                                           <div class="quantity">
-                                              <h6>Bide sttep :</h6>
+                                            <h6 *ngIf="current_bid &&current_bid.max_price" style="margin-top:10px">Mức giá tối đa dành cho sản phẩm: {{current_bid.max_price}}$</h6><br>
+                                              <h6>Bước gá :</h6>
                                               <!-- Input Order -->
                                               <div class="input-group">
                                                   <input type="number" name="quant[1]" class="input-number"  data-min="1" data-max="1000" value="1" [(ngModel)]="bide_step">
@@ -136,15 +160,18 @@
                                          
                                           <div class="tab-pane fade" id="reviews" role="tabpanel">
                                               <div class="tab-single review-panel">
-                                                  <div class="row">
+                                                  <div class="row" style="height: 400px;
+                                                  overflow-y: auto;">
                                                       <div class="col-12">
                                                         <div class="single-des">
                                                             <ul>
                                                               <li *ngFor="let message of messages">
-                                                                  <span>{{message.userID}}
-                                                                      đã đấu giá sản phẩm với giá
+                                                                  <span>{{message.owner.name}}</span>
+                                                                  <!-- <span *ngIf="current_user">{{current_user.name}}</span> -->
+                                                                    <p>
+                                                                    đã đấu giá sản phẩm với giá
                                                                       {{message.price}}$
-                                                                  </span>
+                                                                    </p>
                                                               </li>
                                                             </ul>
                                                         </div>

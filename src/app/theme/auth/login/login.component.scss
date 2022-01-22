@@ -95,3 +95,20 @@
         border-bottom-color: rgba(27, 139, 249, 0.4);
     }
 }
+.btn {
+    height: 45px;
+    width: auto;
+    padding: 0 42px;
+    line-height: 45px;
+    text-align: center;
+    text-transform: capitalize;
+    margin-right: 5px;
+    border-radius: 0px;
+    background: #333;
+    color: #fff;
+    display: inline-block;
+    font-weight: 500;
+}
+.btn:hover {
+    background: #ff7315;
+  }

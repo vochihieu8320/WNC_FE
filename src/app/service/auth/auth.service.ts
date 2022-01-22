@@ -5,6 +5,8 @@ import { User } from '../../model/user.model';
 import { map } from 'rxjs/operators';
 import { environment } from '../../../environments/environment';
 import jwtDecode from "jwt-decode";
+import {ActivatedRoute, Router} from '@angular/router';
+
 @Injectable({
   providedIn: 'root'
 })
@@ -13,7 +15,7 @@ export class AuthService {
   private currentUserSubject: BehaviorSubject<User>;
   Header: any
   currentUser: any
-  constructor(private http: HttpClient ) { 
+  constructor(private http: HttpClient,  private router: Router, private route: ActivatedRoute ) { 
     this.currentUserSubject = new BehaviorSubject<User>(
       JSON.parse(localStorage.getItem('currentUser')|| '{}'));
     this.currentUser = this.currentUserSubject.asObservable();
@@ -58,6 +60,12 @@ export class AuthService {
     
   };
 
+  async canActivate(){
+    if(!await this.checkLoggin())
+    {
+      this.router.navigate([`auth/login`]);
+    }
+  }
   public setLocalUserProfile(token : string, refreshToken: string): void {
     try {
       const decoded = Object(jwtDecode(token));
