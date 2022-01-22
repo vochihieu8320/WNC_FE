@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { AppComponent } from './app.component';
-
+import {AuthGuard} from './helper/authguard';
 const routes: Routes = [
   {
     path: '',
@@ -12,6 +12,7 @@ const routes: Routes = [
         pathMatch: 'full'
       },
       {
+        canActivate:[AuthGuard],
         path: 'products',
         loadChildren: () => import("./theme/products/products.module").then(m => m.ProductsModule)
       },
