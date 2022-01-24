@@ -1,4 +1,5 @@
 <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet">
+  
   <div class="main-content">
     <div class="container-fluid mt-7" style="position: relative;
     top: 121px;">
@@ -16,8 +17,7 @@
             </div>
             <div class="card-header text-center border-0 pt-8 pt-md-4 pb-0 pb-md-4">
               <div class="d-flex justify-content-between">
-                <a href="#" class="btn btn-sm btn-info mr-4">Connect</a>
-                <a href="#" class="btn btn-sm btn-default float-right">Message</a>
+              
               </div>
             </div>
             <div class="card-body pt-0 pt-md-4">
@@ -25,23 +25,23 @@
                 <div class="col">
                   <div class="card-profile-stats d-flex justify-content-center mt-md-5">
                     <div>
-                      <span class="heading">22</span>
-                      <span class="description">Friends</span>
+                      <span class="heading"></span>
+                      <span class="description"></span>
                     </div>
                     <div>
-                      <span class="heading">10</span>
-                      <span class="description">Photos</span>
+                      <span class="heading"></span>
+                      <span class="description"></span>
                     </div>
                     <div>
-                      <span class="heading">89</span>
-                      <span class="description">Comments</span>
+                      <span class="heading"></span>
+                      <span class="description"></span>
                     </div>
                   </div>
                 </div>
               </div>
               <div class="text-center">
-                <h3>
-                  Jessica Jones<span class="font-weight-light">, 27</span>
+                <h3 *ngIf="current_user">
+                  {{current_user.name}},<span class="font-weight-light">{{current_user.email}}</span>
                 </h3>
               </div>
             </div>
@@ -55,46 +55,76 @@
                   <h3 class="mb-0">My account</h3>
                 </div>
                 <div class="col-4 text-right">
-                  <a href="#!" class="btn btn-sm btn-primary">Settings</a>
+                  <a href="/user" class="btn btn-sm btn-primary">User information</a>
                 </div>
               </div>
             </div>
             <div class="card-body">
-              <form>
-                <h6 class="heading-small text-muted mb-4">User information</h6>
+              <form #validationForm="ngForm" *ngIf="user_form">
                 <div class="pl-lg-4">
                   <div class="row">
                     <div class="col-lg-6">
                       <div class="form-group focused">
                         <label class="form-control-label" for="input-username">Name</label>
-                        <input type="text" id="input-username" class="form-control form-control-alternative" placeholder="Username" value="lucky.jesse">
+                        <input type="text" id="input-username" class="form-control form-control-alternative" placeholder="Username"
+                        name="name" [ngClass]="{'is-invalid': !name.valid && (name.dirty || name.touched || isSubmit)}" 
+                        #name="ngModel" minlength="6" required [(ngModel)]="user_form.name">
+                        <label *ngIf="!name.valid && (name.dirty || name.touched || isSubmit)" 
+                        id="validation-name-error" 
+                        class="error jquery-validation-error small form-text invalid-feedback">Please enter a valid name.</label>
                       </div>
                     </div>
                     <div class="col-lg-6">
                       <div class="form-group">
                         <label class="form-control-label" for="input-email">Email</label>
-                        <input type="email" id="input-email" class="form-control form-control-alternative" placeholder="jesse@example.com">
+                        <input type="email" id="input-email" class="form-control  form-control-alternative" placeholder="jesse@example.com"
+                        name="email" [ngClass]="{'is-invalid': !email.valid && (email.dirty || email.touched || isSubmit)}" 
+                        #email="ngModel" minlength="6" required [(ngModel)]="user_form.email">
+                        <label *ngIf="!email.valid && (email.dirty || email.touched || isSubmit)" 
+                        id="validation-name-error" 
+                        class="error jquery-validation-error small form-text invalid-feedback">Please enter a valid email.</label>
                       </div>
                     </div>
                   </div>
                   <div class="row">
                     <div class="col-lg-6">
                       <div class="form-group focused">
-                        <label class="form-control-label" for="input-first-name">Password</label>
-                        <input type="text" id="input-first-name" class="form-control form-control-alternative" placeholder="First name" value="Lucky">
+                        <label class="form-control-label" for="input-password">Password</label>
+                        <input type="password" id="input-first-name" class="form-control form-control-alternative"
+                        name="password" [ngClass]="{'is-invalid': !password.valid && (password.dirty || password.touched || isSubmit)}" 
+                        #password="ngModel" minlength="6" required [(ngModel)]="user_form.password" >
+                        <label *ngIf="!password.valid && (password.dirty || password.touched || isSubmit)" 
+                        id="validation-name-error" 
+                        class="error jquery-validation-error small form-text invalid-feedback">Please enter a valid password.</label>
                       </div>
                     </div>
-                    <div class="col-lg-6">
+                    <div class="col-lg-6" *ngIf="user_form.password">
                       <div class="form-group focused">
-                        <label class="form-control-label" for="input-last-name">Password Confirmation</label>
-                        <input type="text" id="input-last-name" class="form-control form-control-alternative" placeholder="Last name" value="Jesse">
+                        <label class="form-control-label" for="input-password-co">New Password </label>
+                        <input type="password" id="input-last-name" class="form-control form-control-alternative"
+                        name="new_password" [ngClass]="{'is-invalid': !new_password.valid && (new_password.dirty || new_password.touched || isSubmit)}" 
+                        #new_password="ngModel" minlength="6" required [(ngModel)]="user_form.new_password" >
+                        <label *ngIf="!new_password.valid && (new_password.dirty || new_password.touched || isSubmit)" 
+                        id="validation-name-error" 
+                        class="error jquery-validation-error small form-text invalid-feedback">Please enter a valid new_password.</label>
+                      </div>
+                    </div>
+                    <div class="col-lg-6" *ngIf="user_form.password">
+                      <div class="form-group focused">
+                        <label class="form-control-label" for="input-password-co">New Password Confirmation</label>
+                        <input type="password" id="input-last-name" class="form-control form-control-alternative"
+                        name="new_password_confirm" [ngClass]="{'is-invalid': !new_password_confirm.valid && (new_password_confirm.dirty || new_password_confirm.touched || isSubmit)}" 
+                        #new_password_confirm="ngModel" minlength="6" required [(ngModel)]="user_form.new_password_confirm" >
+                        <label *ngIf="!new_password_confirm.valid && (new_password_confirm.dirty || new_password_confirm.touched || isSubmit)" 
+                        id="validation-name-error" 
+                        class="error jquery-validation-error small form-text invalid-feedback">Please enter a valid new_password_confirm.</label>
                       </div>
                     </div>
                   </div>
                 </div>
                 <div class="row justify-content-center">
                     <div class="col-md-6">
-                        <button type="submit" class="btn btn-primary" style="width:100%">
+                        <button type="submit" class="btn btn-primary" style="width:100%" (click)="save()">
                             Save
                         </button>
                     </div>
@@ -105,8 +135,19 @@
         </div>
       </div>
     </div>
+    <div *ngIf="loading">
+      <div class="preloader3" style=" 
+      position:fixed;
+      bottom: 50%;
+      right: 50%">
+        <div class="circ1"></div>
+        <div class="circ2"></div>
+        <div class="circ3"></div>
+        <div class="circ4"></div>
+      </div>
+    </div>
   </div>
-  <section class="shop single section">
+  <section class="shop single section mt-5">
     <div class="container">
     <div class="row">
         <div class="col-12">
@@ -114,101 +155,219 @@
                 <div class="nav-main">
                     <!-- Tab Nav -->
                     <ul class="nav nav-tabs" id="myTab" role="tablist">
-                        <li class="nav-item"><a class="nav-link active" data-toggle="tab" href="#description" role="tab">Biding List</a></li>
-                        <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#reviews" role="tab">Reviews</a></li>
-                        <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#love_list" role="tab">Love List</a></li>
+                        <li class="nav-item" *ngIf="user_type == 1">
+                          <a class="nav-link active" data-toggle="tab" href="#user_biding"  (click)="test('user_biding')" role="tab">Biding List</a>
+                        </li>
+                        <li class="nav-item"  *ngIf="user_type == 1">
+                          <a class="nav-link" data-toggle="tab" href="#love_list"  (click)="test('love_list')" role="tab">Love List</a>
+                        </li>
+                        <li class="nav-item" *ngIf="user_type == 2">
+                          <a class="nav-link active " data-toggle="tab" href="#productList" (click)="test('product_list')" role="tab">Product List</a>
+                        </li>
+                        <li class="nav-item">
+                          <a class="nav-link" data-toggle="tab" href="#reviews" (click)="test('reviews')" role="tab">Reviews</a>
+                        </li>
+                        <li class="nav-item">
+                          <a class="nav-link " data-toggle="tab" href="#winnerList"  *ngIf="user_type == 2" (click)="test('winner_list')" role="tab">Winner List</a>
+                        </li>
+                        <li class="nav-item">
+                          <a class="nav-link " data-toggle="tab" href="#user_winnerList" *ngIf="user_type == 1" (click)="test('user_winnerList')" role="tab">Your winning</a>
+                        </li>
 
                     </ul>
                     <!--/ End Tab Nav -->
                 </div>
                 <div class="tab-content" id="myTabContent">
                     <!-- Description Tab -->
-                    <div class="tab-pane fade show active" id="description" role="tabpanel">
+                    <div class="tab-pane fade show active" id="user_biding" role="tabpanel" *ngIf="user_type == 1">
                         <div class="tab-single">
                             <div class="row mt-4">
                                 <div class="col-12">
                                     <table class="table table-bordered">
                                         <thead class="thead-dark">
                                             <tr>
-                                                <th>No</th>
-                                                <th>Product</th>
-                                                <th>Date</th>
-                                                <th>Price</th>
-                                                <th>Status</th>
-                                                <th>Action</th>
+                                              <th>Sản phẩm</th>
+                                              <th>Hình ảnh</th>
+                                              <th>Ngày hết hạn</th>
+                                              <th>Giá đưa ra</th>
+                                              <th>Bước giá</th>
+                                              <th>Tùy chọn khác</th>
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <tr>
-                                                <td>1</td>
-                                                <td>Product Name</td>
-                                                <td>01 Jan 2020</td>
-                                                <td>$99</td>
-                                                <td>Approved</td>
-                                                <td><button class="btn">View</button></td>
+                                            <tr *ngFor="let user_bide of user_biding">
+                                                <td>{{user_bide.productInfo.name}}</td>
+                                                <td>
+                                                  <img src={{user_bide.productInfo.img}} style="width:auto; height:100px">
+                                                </td>
+                                                <td>{{user_bide.productInfo.date_bid }}</td>
+                                                <td>{{user_bide.current_price }}$</td>
+                                                <td>{{user_bide.bid_step }}$</td>
+                                                <td class="text-center"><button class="btn"
+                                                  (click)="detail(user_bide.productInfo._id)">Chi tiết</button>
+                                                </td>
                                             </tr>
-                                            <tr>
-                                                <td>2</td>
-                                                <td>Product Name</td>
-                                                <td>01 Jan 2020</td>
-                                                <td>$99</td>
-                                                <td>Approved</td>
-                                                <td><button class="btn">View</button></td>
-                                            </tr>
-                                            <tr>
-                                                <td>3</td>
-                                                <td>Product Name</td>
-                                                <td>01 Jan 2020</td>
-                                                <td>$99</td>
-                                                <td>Approved</td>
-                                                <td><button class="btn">View</button></td>
-                                            </tr>
+                                            
                                         </tbody>
                                     </table>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <div class="tab-pane fade show " id="love_list" role="tabpanel">
+                    <div class="tab-pane fade show active " id="productList" role="tabpanel" *ngIf="user_type == 2">
+                      <div class="tab-single">
+                          <div class="row mt-4">
+                              <div class="col-12">
+                                  <table class="table table-bordered">
+                                      <thead class="thead-dark">
+                                          <tr>
+                                              <th>Sản phẩm</th>
+                                              <th>Hình ảnh</th>
+                                              <th>Ngày hết hạn</th>
+                                              <th>Giá</th>
+                                              <th>Trạng Thái</th>
+                                              <th>Tùy chọn khác</th>
+                                          </tr>
+                                      </thead>
+                                      <tbody>
+                                          <tr *ngFor="let product of products">
+                                              <td>{{product.name}}</td>
+                                              <td>
+                                                <img src={{product.img}} style="width:auto; height:100px">
+                                              </td>
+                                              <td>{{product.date_bid }}</td>
+                                              <td>{{product.auction.min_price }}$</td>
+                                              <td *ngIf="product.auction.status == 1">Đang đấu giá</td>
+                                              <td *ngIf="product.auction.status == 0">Người đang giữ giá
+                                                <a href="/user" class="btn btn-sm btn-primary ml-2"> {{product.user[0].name}}</a>
+                                              </td>
+                                              <td>
+                                                <button class="btn" (click)="rejectBid(product)">Từ chối ra giá</button>
+                                                <button class="btn" (click)="udpateAuction(product)">Chấp nhận mức giá</button>
+                                              </td>
+                                          </tr>
+                                       
+                                      </tbody>
+                                  </table>
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+                  <div class="tab-pane fade show " id="winnerList" role="tabpanel">
+                    <div class="tab-single">
+                        <div class="row mt-4">
+                            <div class="col-12">
+                                <table class="table table-bordered">
+                                    <thead class="thead-dark">
+                                        <tr>
+                                          <th>Sản phẩm</th>
+                                          <th>Hình ảnh</th>
+                                          <th>Ngày hết hạn</th>
+                                          <th>Giá</th>
+                                          <th *ngIf="user_type == 2">Người chiến thắng</th>
+                                          <th *ngIf="user_type == 1">Người Bán</th>
+                                          <th>Tùy chọn khác</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                      <tr *ngFor="let product of winners">
+                                        <td>
+                                          {{product.name}}
+                                        </td>
+                                        <td>
+                                          <img src={{product.img}} style="width:auto; height:100px">
+                                        </td>
+                                        <td>{{product.date_bid }}</td>
+                                        <td>{{product.auction.min_price }}$</td>
+                                        <td>
+                                          <a href="/user" class="btn btn-sm btn-primary ml-2"> {{product.user[0].name}}</a>
+                                          <button class="btn" (click)="like(product.user[0])"><i class="fas fa-thumbs-up"></i></button>
+                                          <button class="btn" (click)="dislike(product.user[0])"><i class="fas fa-thumbs-down"></i></button>
+                                        </td>
+                                        <td>
+                                          <button class="btn" >Hủy giao dịch</button>
+                                        </td>
+                                    </tr>
+                                       
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="row justify-content-center">
+                          <div class="col-md-5">
+                            
+                            </div>
+                      </div>
+                    </div>
+                </div>
+                <div class="tab-pane fade show " id="user_winnerList" role="tabpanel">
+                  <div class="tab-single">
+                      <div class="row mt-4">
+                          <div class="col-12">
+                              <table class="table table-bordered">
+                                  <thead class="thead-dark">
+                                      <tr>
+                                        <th>Sản phẩm</th>
+                                        <th>Hình ảnh</th>
+                                        <th>Ngày hết hạn</th>
+                                        <th>Giá</th>
+                                        <th>Người Bán</th>
+                                      </tr>
+                                  </thead>
+                                  <tbody>
+                                    <tr *ngFor="let auction of user_winning_list">
+                                      <td>
+                                        {{auction.productInfo.name}}
+                                      </td>
+                                      <td>
+                                        <img src={{auction.productInfo.img}} style="width:auto; height:100px">
+                                      </td>
+                                      <td>{{auction.productInfo.date_bid }}</td>
+                                      <td>{{auction.min_price }}$</td>
+                                      <td>
+                                        <a href="/user" class="btn btn-sm btn-primary ml-2"> {{auction.sellerDetail.name}}</a>
+                                        <button class="btn" (click)="like(auction.sellerDetail)" ><i class="fas fa-thumbs-up"></i></button>
+                                        <button class="btn" (click)="dislike(auction.sellerDetail)"><i class="fas fa-thumbs-down"></i></button>
+                                      </td>
+                                  </tr>
+                                     
+                                  </tbody>
+                              </table>
+                          </div>
+                      </div>
+                      <div class="row justify-content-center">
+                        <div class="col-md-5">
+                          
+                          </div>
+                    </div>
+                  </div>
+              </div>
+                    <div class="tab-pane fade show " id="love_list" role="tabpanel" *ngIf="user_type == 1" >
                         <div class="tab-single">
                             <div class="row mt-4">
                                 <div class="col-12">
                                     <table class="table table-bordered">
                                         <thead class="thead-dark">
                                             <tr>
-                                                <th>No</th>
-                                                <th>Product</th>
-                                                <th>Date</th>
-                                                <th>Price</th>
-                                                <th>Status</th>
-                                                <th>Action</th>
+                                              <th>Sản phẩm</th>
+                                              <th>Hình ảnh</th>
+                                              <th>Ngày hết hạn</th>
+                                              <th>Tùy chọn khác</th>
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <tr>
-                                                <td>1</td>
-                                                <td>Product Name</td>
-                                                <td>01 Jan 2020</td>
-                                                <td>$99</td>
-                                                <td>Approved</td>
-                                                <td><button class="btn">View</button></td>
+                                            <tr *ngFor="let love_list of  user_love_list; index as i">
+                                                <td>{{love_list.productInfo.name}}</td>
+                                                <td>
+                                                  <img src={{love_list.productInfo.img}} style="width:auto; height:100px">
+                                                </td>
+                                                <td>{{love_list.productInfo.date_bid }}</td>
+                                                <td class="text-center"><button class="btn"
+                                                  (click)="detail(love_list.productInfo._id)">Chi tiết</button>
+                                                  <button class="btn" (click)="delete_love_list(love_list._id, i)">Xóa khỏi danh sách yêu thích</button>
+                                                </td>
                                             </tr>
-                                            <tr>
-                                                <td>2</td>
-                                                <td>Product Name</td>
-                                                <td>01 Jan 2020</td>
-                                                <td>$99</td>
-                                                <td>Approved</td>
-                                                <td><button class="btn">View</button></td>
-                                            </tr>
-                                            <tr>
-                                                <td>3</td>
-                                                <td>Product Name</td>
-                                                <td>01 Jan 2020</td>
-                                                <td>$99</td>
-                                                <td>Approved</td>
-                                                <td><button class="btn">View</button></td>
-                                            </tr>
+                                            
                                         </tbody>
                                     </table>
                                 </div>
@@ -222,100 +381,38 @@
                                 <div class="col-12">
                                     <div class="ratting-main">
                                         <div class="avg-ratting">
-                                            <h4>4.5 <span>(Overall)</span></h4>
+                                            <h4>{{current_user_rating}} <span>(Overall)</span></h4>
                                             <span>Based on 1 Comments</span>
                                         </div>
-                                        <div class="single-rating">
+                                        <div class="single-rating" *ngFor="let review of comments">
                                             <div class="rating-author">
-                                                <img src="assets/images/product_01.jpg" alt="#">
+                                                <img src={{review.judge[0].avatar}} alt="#">
                                             </div>
                                             <div class="rating-des">
-                                                <h6>Jaasa</h6>
-                                                <div class="ratings">
-                                                    <ul class="rating">
-                                                        <li><i class="fa fa-star"></i></li>
-                                                        <li><i class="fa fa-star"></i></li>
-                                                        <li><i class="fa fa-star"></i></li>
-                                                        <li><i class="fa fa-star-half-o"></i></li>
-                                                        <li><i class="fa fa-star-o"></i></li>
-                                                    </ul>
-                                                    <div class="rate-count">(<span>3.5</span>)</div>
-                                                </div>
-                                                <p>Duis tincidunt mauris ac aliquet congue. Donec vestibulum consequat cursus. Aliquam pellentesque nulla dolor, in imperdiet.</p>
+                                                <h6>{{review.judge[0].name}}</h6>
+                                                <p>{{review.message}}</p>
                                             </div>
                                         </div>
                                        
-                                        <div class="single-rating">
-                                            <div class="rating-author">
-                                                <img src="assets/images/product_01.jpg" alt="#">
-                                            </div>
-                                            <div class="rating-des">
-                                                <h6>Jassa</h6>
-                                                <div class="ratings">
-                                                    <ul class="rating">
-                                                        <li><i class="fa fa-star"></i></li>
-                                                        <li><i class="fa fa-star"></i></li>
-                                                        <li><i class="fa fa-star"></i></li>
-                                                        <li><i class="fa fa-star"></i></li>
-                                                        <li><i class="fa fa-star"></i></li>
-                                                    </ul>
-                                                    <div class="rate-count">(<span>5.0</span>)</div>
-                                                </div>
-                                                <p>Duis tincidunt mauris ac aliquet congue. Donec vestibulum consequat cursus. Aliquam pellentesque nulla dolor, in imperdiet.</p>
-                                            </div>
-                                        </div>
+                                      
                                     </div>
-                                    <!-- <div class="comment-review">
-                                        <div class="add-review">
-                                            <h5>Add A Review</h5>
-                                            <p>Your email address will not be published. Required fields are marked</p>
-                                        </div>
-                                        <h4>Your Rating</h4>
-                                        <div class="review-inner">
-                                            <div class="ratings">
-                                                <ul class="rating">
-                                                    <li><i class="fa fa-star"></i></li>
-                                                    <li><i class="fa fa-star"></i></li>
-                                                    <li><i class="fa fa-star"></i></li>
-                                                    <li><i class="fa fa-star"></i></li>
-                                                    <li><i class="fa fa-star"></i></li>
-                                                </ul>
-                                            </div>
-                                        </div>
-                                    </div> -->
-                                    
-                                    <!-- <form class="form" method="post" action="mail/mail.php">
-                                        <div class="row">
-                                            <div class="col-lg-6 col-12">
-                                                <div class="form-group">
-                                                    <label>Your Name<span>*</span></label>
-                                                    <input type="text" name="name" required="required" placeholder="">
-                                                </div>
-                                            </div>
-                                            <div class="col-lg-6 col-12">
-                                                <div class="form-group">
-                                                    <label>Your Email<span>*</span></label>
-                                                    <input type="email" name="email" required="required" placeholder="">
-                                                </div>
-                                            </div>
-                                            <div class="col-lg-12 col-12">
-                                                <div class="form-group">
-                                                    <label>Write a review<span>*</span></label>
-                                                    <textarea name="message" rows="6" placeholder="" ></textarea>
-                                                </div>
-                                            </div>
-                                            <div class="col-lg-12 col-12">
-                                                <div class="form-group button5">  
-                                                    <button type="submit" class="btn">Submit</button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </form> -->
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
+                <div class="row justify-content-center">
+                  <div class="col-md-5">
+                      <ngb-pagination
+                      [pageSize] = "pagesize"
+                      [collectionSize]="totalItems"
+                      [boundaryLinks]="true"
+                      [(page)]="currentPage"
+                      (pageChange)="onPageChange(currentPage)"
+                      [maxSize]="maxSize"
+                      ></ngb-pagination>
+                    </div>
+              </div>
             </div>
         </div>
     </div>

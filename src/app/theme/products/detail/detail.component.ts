@@ -25,7 +25,21 @@ export class DetailComponent implements OnInit {
   messages: any;
   current_user: any;
   holder: any;
-  current_bid: any
+  current_bid: any;
+  user_name: any;
+  current_maxprice: any;
+  related_products: any;
+  rating: any;
+  find_holder:any;
+  seller: any;
+  find_seller: any;
+  rating_seller: any;
+  form_description: any = {
+    productID: "",
+    message: "",
+  };
+  product_description: any;
+  isSubmit:boolean = false;
   constructor(private service: ProductService, 
     private router: Router, private route: ActivatedRoute, 
     private userService: UserService) 
@@ -38,12 +52,28 @@ export class DetailComponent implements OnInit {
     this.loading = true;
     const result = <any> await this.service.show(this.product_id);
     this.product = result[0];
-    const find_holder = <any> await this.userService.show(this.product.auction.holderID);
-    this.holder = find_holder.name
+    this.find_holder = <any> await this.userService.show(this.product.auction.holderID);
+    const rating_length = Math.floor(this.find_holder.rating / 2)
+    this.rating = Array(rating_length).fill(0);
+    this.holder = this.find_holder.data.name;
+    this.find_seller = <any> await this.userService.show(this.product.seller);
+    const rating_seller_length = Math.floor(this.find_seller.rating / 2);
+    this.rating_seller =  Array(rating_seller_length).fill(0);
+    this.seller = this.find_seller.data.name;
+
     this.sub_img = JSON.parse(this.product.sub_img);
     const local = <any> localStorage.getItem("currentUser");
     this.userID = JSON.parse(local)["id"];
-    this.current_bid = await this.userService.currentBide(this.userID, this.product._id)
+    this.user_name = JSON.parse(local)["name"];
+    this.current_bid = await this.userService.currentBide(this.userID, this.product._id);
+    const related_products = {
+      productID: this.product._id,
+      category: this.product.category
+    }
+    this.related_products = await this.service.relateProduct(related_products);
+    //get all of description
+
+    this.product_description = await this.service.get_description(this.product_id)
     this.loading = false;
 
     this.socket = io("http://localhost:5000");
@@ -59,7 +89,7 @@ export class DetailComponent implements OnInit {
     })
     // received-messages
     this.socket.on("received-messages", async(message:any, user: any)=>{
-        if(this.messages[this.messages.length - 1].price == message.price)
+        if(this.messages.length > 0 && this.messages[this.messages.length - 1].price === message.price)
         {
           await this.service.delete_history(message._id)
         }
@@ -103,8 +133,9 @@ export class DetailComponent implements OnInit {
           {
             this.product.auction.min_price = result.data.price;
             const userinfo = <any> await this.userService.show(result.data.userID);
-            result.data.owner = userinfo
-            this.messages.push(result.data)
+            result.data.owner = userinfo;
+            this.current_bid.auto_bide = 0
+            this.socket.emit("bide", result.data)
           }
           this.loading = false;
           Swal.fire('Saved!', '', 'success')
@@ -130,18 +161,27 @@ export class DetailComponent implements OnInit {
       confirmButtonText: 'Look up',
       showLoaderOnConfirm: true,
       preConfirm: (price) => {
+        if(+price < +this.product.auction.min_price) {
+          Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: 'Giá trị tối đa trả cho sản phẩm phải lớn hơn giá trị hiện tại của sản phẩm',
+           
+          })       
+          return false
+        }
         this.min_price = +suggest.min_price+ (+this.bide_step);
         this.product.auction.min_price = this.min_price
         max_price = price;
-        this.current_bid = price
+        this.current_bid.max_price = max_price;
         return true
       },
       allowOutsideClick: () => !Swal.isLoading()
     }).then((result) => {
       if (result.isConfirmed) {
         Swal.fire({
-          title: `Bạn có muốn hệ thống tự động đấu giá sản phẩm dựa trên bước giá ${this.bide_step} 
-          và giá trị tối đa là ${max_price}?`,
+          title: `Bạn có muốn hệ thống tự động đấu giá sản phẩm dựa trên bước giá ${this.bide_step}$ 
+          và giá trị tối đa là ${max_price}$ ?`,
         
           showCancelButton: true,
           confirmButtonText: 'Yes',
@@ -156,7 +196,6 @@ export class DetailComponent implements OnInit {
               bid_step: this.bide_step,
               max_price: +max_price
             }
-            console.log(body);
             const result = <any> await this.service.manual_bid(body);
             if(result.data)
             {
@@ -164,7 +203,8 @@ export class DetailComponent implements OnInit {
               console.log(find_holder)
               let message = result.data;
               message.owner = find_holder
-              this.messages.push(message)
+              this.messages.push(message);
+              this.current_bid.auto_bide = 1
             }
             Swal.fire('Sản phấm đã được đấu giá tự động', '', 'success')
           } else if (result.isDenied) {
@@ -176,13 +216,38 @@ export class DetailComponent implements OnInit {
     
   }
 
-  async getUserProfile(userID: string){
+  async relatedProducts(productID:any){
     try {
-      const result = <any> await this.service.userProfile(userID);
-      console.log(result);
-      return "voc chi hieu"
+      this.router.navigate([`/products/${productID}`])
     } catch (error) {
-      return "";
+      
+    }
+  }
+
+  async add_love_list()
+  {
+    try {
+      const body = {
+        userID: this.userID,
+        productID: this.product_id
+      }
+      await this.service.add_love_list(body);
+      Swal.fire('Sản phấm đã được thêm vào danh sách yêu thích', '', 'success')
+    } catch (error) {
+      
+    }
+  }
+
+  async add_description(){
+    this.form_description.productID = this.product_id;
+    try {
+      this.loading = true
+      const result = await this.service.add_description(this.form_description);
+      this.product_description.push(result);
+      this.loading = false;
+    } catch (error) {
+      console.log(error);
+      this.loading = false;
     }
   }
 }

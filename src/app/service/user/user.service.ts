@@ -52,4 +52,34 @@ export class UserService {
     await this.CreateHeader();
     return this.http.get(`${environment.apiUrl}/users/${userID}/bide/${product_id}`, {headers: this.Header}).toPromise();  
   }
+
+  async changePwd(body:any)
+  {
+    await this.CreateHeader();
+    return this.http.post(`${environment.apiUrl}/users/change-pwd`, body, {headers: this.Header}).toPromise();  
+  }
+
+  async update_me(userID:any, body:any)
+  {
+    await this.CreateHeader();
+    return this.http.patch(`${environment.apiUrl}/users/update_me/${userID}`, body, {headers: this.Header}).toPromise();  
+  }
+
+  async like(userID:any, body:any)
+  {
+    await this.CreateHeader();
+    return this.http.post(`${environment.apiUrl}/users/${userID}/like`, body, {headers: this.Header}).toPromise();  
+  }
+
+  async commented(body:any)
+  {
+    await this.CreateHeader();
+    return this.http.post(`${environment.apiUrl}/feedbacks`, body, {headers: this.Header}).toPromise();  
+  }
+
+  async get_comments(userID:any, skip:any, limit: any)
+  {
+    await this.CreateHeader();
+    return this.http.get(`${environment.apiUrl}/feedbacks?userID=${userID}&skip=${skip}&limit=${limit}`, {headers: this.Header}).toPromise();  
+  }
 }

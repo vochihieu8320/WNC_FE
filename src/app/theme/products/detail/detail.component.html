@@ -34,14 +34,19 @@
                                           <p class="price"><span>Giá hiện tại: ${{product.auction.min_price}}</span>
                                             Mua ngay: ${{product.buy_now_price}}</p>
                                           <div class="rating-main">
-                                            <span>Người bán: Vo Chi Hieu</span>
-                                            <ul class="rating ml-2" >
-                                                <li><i class="fa fa-star"></i></li>
-                                                <li><i class="fa fa-star"></i></li>
-                                                <li><i class="fa fa-star"></i></li>
-                                                <li><i class="fa fa-star-half-o"></i></li>
-                                                <li class="dark"><i class="fa fa-star-o"></i></li>
+                                              <span>
+                                                Người bán<span class="badge badge-danger" style="margin-left: 8px">{{seller}}</span>
+                                              </span>
+                                            <ul class="rating ml-2" *ngIf="find_seller">
+                                                <li *ngFor="let rate of rating_seller">
+                                                    <i class="fa fa-star"></i>
+                                                    </li>
+                                                    <li *ngIf="find_seller.rating % 2 != 0"><i class="fa fa-star-half-o"></i></li>
+                                                    <li class="dark" *ngIf="rating_seller.length == 4 && find_seller.rating % 2 == 0">
+                                                        <i class="fa fa-star-o">
+                                                        </i>
                                             </ul>
+                                            <span style="margin-left:8px" *ngIf="find_seller">({{find_seller.rating / 2}})</span> 
                                         </div>
                                           <span>
                                               {{ product.description }}
@@ -61,18 +66,23 @@
                                                 <span> {{ product.date_bid }}</span>
                                               </li>
                                               <li style="position: relative;
-                                              top: -20px;">
+                                              top: -20px;" *ngIf="rating">
                                                 <span>Holder</span>
                                                 
-                                                  <span style="margin-left:8px">{{holder}}</span>
+                                                  <span style="margin-left:8px" *ngIf="holder !== user_name">{{holder}}</span>
+                                                  <span style="margin-left:8px" *ngIf="holder === user_name">
+                                                    <span class="badge badge-danger">You</span>
+                                                    </span>
                                                   <ul class="rating" >
-                                                    <li><i class="fa fa-star"></i></li>
-                                                    <li><i class="fa fa-star"></i></li>
-                                                    <li><i class="fa fa-star"></i></li>
-                                                    <li><i class="fa fa-star-half-o"></i></li>
-                                                    <li class="dark"><i class="fa fa-star-o"></i></li>
-                                                
-                                                </ul>                       
+                                                     <li *ngFor="let rate of rating">
+                                                    <i class="fa fa-star"></i>
+                                                    </li>
+                                                    <li *ngIf="find_holder.rating % 2 != 0"><i class="fa fa-star-half-o"></i></li>
+                                                    <li class="dark" *ngIf="rating.length == 4 && find_holder.rating % 2 == 0">
+                                                        <i class="fa fa-star-o">
+                                                        </i>
+                                                </ul>
+                                                <span style="margin-left:8px" >({{find_holder.rating / 2}})</span>                       
                                               </li>
                                           </ul>
                                       </div>
@@ -116,9 +126,10 @@
                                               </div>
                                           </div>
                                           <div class="add-to-cart mt-4">
-                                              <a class="btn" (click)="sugget_price()">Manual Bide</a>
-                                              <a class="btn" (click)="auto_bide()">Auto Bide</a>
-                                              <a href="#" class="btn min"><i class="ti-heart"></i></a>
+                                              <a class="btn" (click)="sugget_price()">Đấu giá thủ công</a>
+                                              <a class="btn" (click)="auto_bide()">Đấu giá tự động</a>
+                                              <a class="btn mt-2" (click)="auto_bide()">Mua ngay</a>
+                                              <a class="btn min mt-2" (click)="add_love_list()"><i class="ti-heart"></i></a>
                                           </div>
                                          
                                       </div>
@@ -146,14 +157,34 @@
                                                           <div class="single-des">
                                                               <h4>Product Features:</h4>
                                                               <ul>
-                                                                  <li>Suspendisse consequatur voluptates lorem nobis accumsan natus mattis. Optio pede, optio qui metus, delectus! Ultricies impedit, minus tempor fuga, quasi, pede felis commodo bibendum voluptas nisi? Voluptatem risus tempore tempora. Quaerat aspernatur? Error praesent laoreet, cras in fames hac ea, massa montes diamlorem nec quaerat, quos occaecati leo nam aliquet corporis, ab recusandae parturient, etiam fermentum, a quasi possimus commodi, mollis voluptate mauris mollis, quisque donec
-                                                                    .</li>
-                                                                  <li>has a more-or-less normal distribution. </li>
-                                                                  <li>lmany variations of passages of. </li>
-                                                                  <li>generators on the Interne.</li>
+                                                                  <li>
+                                                                    {{ product.description }}
+                                                                    </li>
+                                                                    <li *ngFor="let message of product_description">
+                                                                        {{ message.message }} {{message.createdAt| date:'short'}}
+                                                                    </li>
                                                               </ul>
                                                           </div>
                                                       </div>
+                                                      <form class="form"  #validationForm="ngForm" *ngIf="form_description">
+                                                        <div class="row">
+                                                            <div class="col-lg-12 col-12">
+                                                                <div class="form-group">
+                                                                    <label>Thêm mô tả cho sản phẩm<span>*</span></label>
+                                                                    <textarea name="message" rows="6" placeholder="" 
+                                                                    name="message"  
+                                                                    [ngClass]="{'is-invalid': !message.valid && (message.dirty || message.touched || isSubmit)}" 
+                                                                    #message="ngModel" minlength="6" required [(ngModel)]="form_description.message"></textarea>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-lg-12 col-12">
+                                                                <div class="form-group button5">  
+                                                                    <a class="btn mt-2" style="background: black; color:white"
+                                                                    (click)="add_description()">Submit</a>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </form>
                                                   </div>
                                               </div>
                                           </div>
@@ -166,12 +197,22 @@
                                                         <div class="single-des">
                                                             <ul>
                                                               <li *ngFor="let message of messages">
-                                                                  <span>{{message.owner.name}}</span>
-                                                                  <!-- <span *ngIf="current_user">{{current_user.name}}</span> -->
+                                                                  <div *ngIf="message.owner.name === user_name" style="background-color: bisque">
+                                                                    <span>You</span>
                                                                     <p>
                                                                     đã đấu giá sản phẩm với giá
                                                                       {{message.price}}$
                                                                     </p>
+                                                                  </div>
+                                                                  <div *ngIf="message.owner.name !== user_name">
+                                                                    <span>{{message.owner.name}}</span>
+                                                                    <p>
+                                                                        đã đấu giá sản phẩm với giá
+                                                                          {{message.price}}$
+                                                                        </p>
+                                                                  </div>
+                                                                   
+                                                                  
                                                               </li>
                                                             </ul>
                                                         </div>
@@ -200,12 +241,11 @@
           </div>
       </div>
       <div class="row">
-        <div class="col-md-4">
+        <div class="col" *ngFor="let product of related_products">
             <div class="product-item">
-              <a href="#"><img src="assets/images/product_02.jpg" alt=""></a>
+              <a (click)="relatedProducts(product._id)"><img src={{product.img}} alt=""></a>
               <div class="down-content">
-                <a href="#"><h4>Tittle goes here</h4></a>
-                <p>Lorem ipsume dolor sit amet, adipisicing elite. Itaque, corporis nulla aspernatur.</p>
+                <a (click)="relatedProducts(product._id)"><h4 style="text-align: center">{{product.name}}</h4></a>
               </div>
             </div>
           </div>
