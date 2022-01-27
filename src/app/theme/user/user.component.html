@@ -10,7 +10,7 @@
               <div class="col-lg-3 order-lg-2">
                 <div class="card-profile-image">
                   <a href="#">
-                    <img src="https://demos.creative-tim.com/argon-dashboard/assets/img/theme/team-4.jpg" class="rounded-circle">
+                    <img src="https://media.istockphoto.com/photos/businessman-silhouette-as-avatar-or-default-profile-picture-picture-id476085198?k=20&m=476085198&s=612x612&w=0&h=8J3VgOZab_OiYoIuZfiMIvucFYB8vWYlKnSjKuKeYQM=" class="rounded-circle">
                   </a>
                 </div>
               </div>
@@ -25,12 +25,17 @@
                 <div class="col">
                   <div class="card-profile-stats d-flex justify-content-center mt-md-5">
                     <div>
-                      <span class="heading"></span>
-                      <span class="description"></span>
+                      <span class="heading">
+                        
+                      </span>
+                     
                     </div>
                     <div>
-                      <span class="heading"></span>
-                      <span class="description"></span>
+                      <span class="heading">
+                        <a href="/products/new" class="btn btn-sm btn-primary">Thêm sản phẩm mới</a>
+                      </span>
+                      <span class="description">
+                      </span>
                     </div>
                     <div>
                       <span class="heading"></span>
@@ -55,7 +60,6 @@
                   <h3 class="mb-0">My account</h3>
                 </div>
                 <div class="col-4 text-right">
-                  <a href="/user" class="btn btn-sm btn-primary">User information</a>
                 </div>
               </div>
             </div>
@@ -231,7 +235,9 @@
                                       </thead>
                                       <tbody>
                                           <tr *ngFor="let product of products">
-                                              <td>{{product.name}}</td>
+                                              <td>
+                                                <a (click)="detail(product._id)" class="btn">{{product.name}}</a>
+                                              </td>
                                               <td>
                                                 <img src={{product.img}} style="width:auto; height:100px">
                                               </td>
@@ -239,7 +245,12 @@
                                               <td>{{product.auction.min_price }}$</td>
                                               <td *ngIf="product.auction.status == 1">Đang đấu giá</td>
                                               <td *ngIf="product.auction.status == 0">Người đang giữ giá
-                                                <a href="/user" class="btn btn-sm btn-primary ml-2"> {{product.user[0].name}}</a>
+                                                <a href="/user" class="btn btn-sm btn-primary ml-2" *ngIf="product.user.length > 0"> 
+                                                  {{product.user[0].name}}
+                                                </a>
+                                                <a href="/user" class="btn btn-sm btn-primary ml-2" *ngIf="product.user.length == 0"> 
+                                                  Sản phẩm chưa có ai đấu giá
+                                                </a>
                                               </td>
                                               <td>
                                                 <button class="btn" (click)="rejectBid(product)">Từ chối ra giá</button>
@@ -272,7 +283,7 @@
                                     <tbody>
                                       <tr *ngFor="let product of winners">
                                         <td>
-                                          {{product.name}}
+                                          <a (click)="detail(product._id)" class="btn">{{product.name}}</a>
                                         </td>
                                         <td>
                                           <img src={{product.img}} style="width:auto; height:100px">
@@ -285,7 +296,7 @@
                                           <button class="btn" (click)="dislike(product.user[0])"><i class="fas fa-thumbs-down"></i></button>
                                         </td>
                                         <td>
-                                          <button class="btn" >Hủy giao dịch</button>
+                                          <button class="btn" (click)="reject_auction(product)" >Hủy giao dịch</button>
                                         </td>
                                     </tr>
                                        
@@ -386,7 +397,8 @@
                                         </div>
                                         <div class="single-rating" *ngFor="let review of comments">
                                             <div class="rating-author">
-                                                <img src={{review.judge[0].avatar}} alt="#">
+                                                <img src="https://media.istockphoto.com/photos/businessman-silhouette-as-avatar-or-default-profile-picture-picture-id476085198?k=20&m=476085198&s=612x612&w=0&h=8J3VgOZab_OiYoIuZfiMIvucFYB8vWYlKnSjKuKeYQM="
+                                                 alt="#">
                                             </div>
                                             <div class="rating-des">
                                                 <h6>{{review.judge[0].name}}</h6>

@@ -1,0 +1,39 @@
+<div class="account section">
+    <div class="container">
+      <div class="row justify-content-center">
+        <div class="col-lg-6">
+          <div class="login-form border p-5">
+            <div class="text-center heading">
+              <h2 class="mb-2">Forgot Password</h2>
+            </div>
+            <form class="mt-5" #validationForm="ngForm" *ngIf="formLogin">
+              <div class="form-group mb-4">
+                <label for="#">Email</label>
+                <input type="email" class="form-control" placeholder="Enter Email" name="email"  
+                [ngClass]="{'is-invalid': !email.valid && (email.dirty || email.touched || isSubmit)}" 
+                #email="ngModel" minlength="6" required [(ngModel)]="formLogin.email">
+                <label *ngIf="!email.valid && (email.dirty || email.touched || isSubmit)" 
+                id="validation-name-error" 
+                class="error jquery-validation-error small form-text invalid-feedback">Please enter a valid email.</label>
+              </div>
+              <a  class="btn btn-main mt-3 btn-block" style="color:white; width: 100%;" (click)="forgotPassword()">Save</a>
+            </form>
+            <div *ngIf="!loading && !!error" class="alert alert-danger icons-alert mt-2">{{error}}</div>
+
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-12 ">
+          <div *ngIf="loading">
+            <div class="preloader3">
+              <div class="circ1"></div>
+              <div class="circ2"></div>
+              <div class="circ3"></div>
+              <div class="circ4"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>

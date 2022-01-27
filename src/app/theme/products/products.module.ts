@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {ProductRoutingModule} from './products.routing.module'
+import { FileUploadModule } from "ng2-file-upload";   //Should import HERE
 
 
 @NgModule({
@@ -10,6 +11,7 @@ import {ProductRoutingModule} from './products.routing.module'
   imports: [
     CommonModule,
     ProductRoutingModule,
+    FileUploadModule
   ]
 })
 export class ProductsModule { }

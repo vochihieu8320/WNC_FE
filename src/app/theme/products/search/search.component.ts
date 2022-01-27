@@ -19,6 +19,10 @@ export class SearchComponent implements OnInit {
   currentPage: number = 0;
   categories: any;
   currentCheck:any;
+  formSearch: any = {
+    value: '',
+  };
+  isSubmit:boolean = false;
   constructor(private router: Router, private route: ActivatedRoute, private service:ProductService) { }
 
   async ngOnInit(){
@@ -29,19 +33,23 @@ export class SearchComponent implements OnInit {
     );
 
   this.params = this.params.params
-
-  this.url = `name=${this.params.name}`
-  const result = <any> await this.service.index(0, 6, this.url);
-  this.categories = <any> await this.service.categories();
-  this.products = result.data;
-  this.totalItems = result.count;
-
-  if(this.products.length === 0){
-    this.url = `category=${this.params.name}`
+  
+  if(this.params.name)
+  {
+    this.url = `name=${this.params.name}`
     const result = <any> await this.service.index(0, 6, this.url);
     this.products = result.data;
     this.totalItems = result.count;
   }
+  
+  if(this.params.category){
+    this.url = `category=${this.params.category}`
+    const result = <any> await this.service.index(0, 6, this.url);
+    this.products = result.data;
+    this.totalItems = result.count;
+  }
+  this.categories = <any> await this.service.categories();
+
   }
   async select(value:any){
     const expression = value.value;
@@ -94,5 +102,29 @@ export class SearchComponent implements OnInit {
     } catch (error) {
       console.log(error)
     }
+  }
+
+  async search()
+  {
+   
+    this.url = `name=${this.formSearch.name}`
+    const result = <any> await this.service.index(0, 6, this.url);
+    if(result.data.length > 0)
+    {
+      this.totalItems = result.count;
+      this.products = result.data;
+    }
+    else
+    {
+      this.url = `category=${this.formSearch.name}`      
+      const result = <any> await this.service.index(0, 6, this.url);
+      this.totalItems = result.count;
+      this.products = result.data
+    }
+  }
+
+  async bide(productID :any)
+  {
+    this.router.navigate([`products/${productID}`]);
   }
 }

@@ -35,7 +35,7 @@ export class AuthService {
   };
 
   async checkLoggin() {
-    let currentUser = this.currentUserSubject.value;
+    let currentUser = <any> this.currentUserSubject.value;
     const refreshToken = localStorage.getItem("refreshToken");
 
     if(refreshToken)
@@ -43,7 +43,7 @@ export class AuthService {
         const current_date = new Date();
         const expired_token = currentUser.exp*1000 
         //check account's token is expired or not
-        if((currentUser && expired_token < current_date.getTime()) || !currentUser)
+        if((currentUser._id !== "undefined") && expired_token < current_date.getTime())
         {         
           // get refreshtoken
           return false;

@@ -52,10 +52,14 @@ export class DetailComponent implements OnInit {
     this.loading = true;
     const result = <any> await this.service.show(this.product_id);
     this.product = result[0];
-    this.find_holder = <any> await this.userService.show(this.product.auction.holderID);
-    const rating_length = Math.floor(this.find_holder.rating / 2)
-    this.rating = Array(rating_length).fill(0);
-    this.holder = this.find_holder.data.name;
+    if(this.product.auction.holderID)
+    {
+      this.find_holder = <any> await this.userService.show(this.product.auction.holderID);
+      const rating_length = Math.floor(this.find_holder.rating / 2)
+      this.rating = Array(rating_length).fill(0);
+      this.holder = this.find_holder.data.name;
+    }
+
     this.find_seller = <any> await this.userService.show(this.product.seller);
     const rating_seller_length = Math.floor(this.find_seller.rating / 2);
     this.rating_seller =  Array(rating_seller_length).fill(0);
@@ -134,8 +138,11 @@ export class DetailComponent implements OnInit {
             this.product.auction.min_price = result.data.price;
             const userinfo = <any> await this.userService.show(result.data.userID);
             result.data.owner = userinfo;
-            this.current_bid.auto_bide = 0
             this.socket.emit("bide", result.data)
+          }
+          if(this.current_bid)
+          {
+            this.current_bid.auto_bide = 0
           }
           this.loading = false;
           Swal.fire('Saved!', '', 'success')
@@ -173,7 +180,10 @@ export class DetailComponent implements OnInit {
         this.min_price = +suggest.min_price+ (+this.bide_step);
         this.product.auction.min_price = this.min_price
         max_price = price;
-        this.current_bid.max_price = max_price;
+        if(this.current_bid)
+        {
+          this.current_bid.max_price = max_price;
+        }
         return true
       },
       allowOutsideClick: () => !Swal.isLoading()
@@ -204,8 +214,11 @@ export class DetailComponent implements OnInit {
               let message = result.data;
               message.owner = find_holder
               this.messages.push(message);
-              this.current_bid.auto_bide = 1
             }
+            if(this.current_bid)
+          {
+            this.current_bid.auto_bide = 1
+          }
             Swal.fire('Sản phấm đã được đấu giá tự động', '', 'success')
           } else if (result.isDenied) {
             Swal.fire('Changes are not saved', '', 'info')
@@ -250,4 +263,6 @@ export class DetailComponent implements OnInit {
       this.loading = false;
     }
   }
+
+  
 }

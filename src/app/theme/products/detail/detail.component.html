@@ -32,7 +32,7 @@
                                               <span>{{product.auction.amount_bider_bide}} Lượt ra giá</span>
                                           </div>
                                           <p class="price"><span>Giá hiện tại: ${{product.auction.min_price}}</span>
-                                            Mua ngay: ${{product.buy_now_price}}</p>
+                                            Mua ngay: ${{product.buy_now_price || ""}}</p>
                                           <div class="rating-main">
                                               <span>
                                                 Người bán<span class="badge badge-danger" style="margin-left: 8px">{{seller}}</span>
@@ -48,8 +48,7 @@
                                             </ul>
                                             <span style="margin-left:8px" *ngIf="find_seller">({{find_seller.rating / 2}})</span> 
                                         </div>
-                                          <span>
-                                              {{ product.description }}
+                                          <span [innerHtml]="product.description">
                                           </span>
                                       </div>
                                       <!--/ End Description -->
@@ -66,10 +65,10 @@
                                                 <span> {{ product.date_bid }}</span>
                                               </li>
                                               <li style="position: relative;
-                                              top: -20px;" *ngIf="rating">
+                                              top: -20px;" *ngIf="rating && find_holder">
                                                 <span>Holder</span>
                                                 
-                                                  <span style="margin-left:8px" *ngIf="holder !== user_name">{{holder}}</span>
+                                                  <span style="margin-left:8px" *ngIf="holder !== user_name">{{holder.substring(0,3)}}**</span>
                                                   <span style="margin-left:8px" *ngIf="holder === user_name">
                                                     <span class="badge badge-danger">You</span>
                                                     </span>
@@ -125,7 +124,7 @@
                                                   <span>$</span>
                                               </div>
                                           </div>
-                                          <div class="add-to-cart mt-4">
+                                          <div class="add-to-cart mt-4" *ngIf="product.seller != userID ">
                                               <a class="btn" (click)="sugget_price()">Đấu giá thủ công</a>
                                               <a class="btn" (click)="auto_bide()">Đấu giá tự động</a>
                                               <a class="btn mt-2" (click)="auto_bide()">Mua ngay</a>
@@ -157,8 +156,7 @@
                                                           <div class="single-des">
                                                               <h4>Product Features:</h4>
                                                               <ul>
-                                                                  <li>
-                                                                    {{ product.description }}
+                                                                  <li [innerHtml]="product.description">
                                                                     </li>
                                                                     <li *ngFor="let message of product_description">
                                                                         {{ message.message }} {{message.createdAt| date:'short'}}
@@ -166,7 +164,8 @@
                                                               </ul>
                                                           </div>
                                                       </div>
-                                                      <form class="form"  #validationForm="ngForm" *ngIf="form_description">
+                                                      <form class="form"  #validationForm="ngForm" *ngIf="form_description 
+                                                      && product.seller == userID ">
                                                         <div class="row">
                                                             <div class="col-lg-12 col-12">
                                                                 <div class="form-group">
@@ -205,7 +204,7 @@
                                                                     </p>
                                                                   </div>
                                                                   <div *ngIf="message.owner.name !== user_name">
-                                                                    <span>{{message.owner.name}}</span>
+                                                                    <span>{{message.owner.name.substring(0, 3)}}***</span>
                                                                     <p>
                                                                         đã đấu giá sản phẩm với giá
                                                                           {{message.price}}$
@@ -243,9 +242,12 @@
       <div class="row">
         <div class="col" *ngFor="let product of related_products">
             <div class="product-item">
-              <a (click)="relatedProducts(product._id)"><img src={{product.img}} alt=""></a>
+              <a (click)="relatedProducts(product._id)"><img src={{product.img}}  style="height: 160px;
+                width: auto;" alt=""></a>
               <div class="down-content">
-                <a (click)="relatedProducts(product._id)"><h4 style="text-align: center">{{product.name}}</h4></a>
+                <a (click)="relatedProducts(product._id)" style="cursor: pointer">
+                    <h4 style="text-align: center">{{product.name}}</h4>
+                </a>
               </div>
             </div>
           </div>

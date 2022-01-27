@@ -8,116 +8,172 @@
             <div class="card-header bg-white border-0">
               <div class="row align-items-center">
                 <div class="col-8">
-                  <h3 class="mb-0">Add new Product</h3>
+                  <h3 class="mb-0">Thêm mới sản phẩm</h3>
                 </div>
                 <div class="col-4 text-right">
                 </div>
               </div>
             </div>
             <div class="card-body">
-              <form>
-                <h6 class="heading-small text-muted mb-4">Product information</h6>
+              <form #validationForm="ngForm" *ngIf="form_product">
+                <h6 class="heading-small text-muted mb-4">Thông tin sản phẩm</h6>
                 <div class="pl-lg-4">
                   <div class="row">
                     <div class="col-lg-6">
                       <div class="form-group focused">
-                        <label class="form-control-label" for="input-username">Name</label>
-                        <input type="text" id="input-username" class="form-control form-control-alternative" placeholder="Username" value="lucky.jesse">
+                        <label class="form-control-label" for="input-username">Tên</label>
+                        <input type="text" id="input-username" class="form-control form-control-alternative" 
+                        name="name"  
+                        [ngClass]="{'is-invalid': !name.valid && (name.dirty || name.touched || isSubmit)}" 
+                        #name="ngModel" minlength="6" required [(ngModel)]="form_product.name">
+                        <label *ngIf="!name.valid && (name.dirty || name.touched || isSubmit)" 
+                        id="validation-name-error" 
+                        class="error jquery-validation-error small form-text invalid-feedback">Please enter a valid name.</label>
                       </div>
                     </div>
                     <div class="col-lg-6">
                       <div class="form-group">
-                        <label class="form-control-label" for="input-email">Email</label>
-                        <input type="email" id="input-email" class="form-control form-control-alternative" placeholder="jesse@example.com">
+                        <label class="form-control-label" for="input-real_price">Giá trị thực của sản phẩm($)</label>
+                        <input type="text" id="input-real_price" class="form-control form-control-alternative" 
+                        name="real_price"  
+                        [ngClass]="{'is-invalid': !real_price.valid && (real_price.dirty || real_price.touched || isSubmit)}" 
+                        #real_price="ngModel" minlength="2" required [(ngModel)]="form_product.real_price">
+                        <label *ngIf="!real_price.valid && (real_price.dirty || real_price.touched || isSubmit)" 
+                        id="validation-real_price-error" 
+                        class="error jquery-validation-error small form-text invalid-feedback">Please enter a valid real_price.</label>
                       </div>
                     </div>
                   </div>
                   <div class="row">
-                    <div class="col-lg-6">
+                    <div class="col-lg-6">  
                       <div class="form-group focused">
-                        <label class="form-control-label" for="input-first-name">Password</label>
-                        <input type="text" id="input-first-name" class="form-control form-control-alternative" placeholder="First name" value="Lucky">
+                        <label class="form-control-label" for="input-first-name">Giá tối thiểu dành cho sản phẩm($)</label>
+                        <input type="text" id="input-first-name" class="form-control form-control-alternative"
+                        name="min_price"  
+                        [ngClass]="{'is-invalid': !min_price.valid && (min_price.dirty || min_price.touched || isSubmit)}" 
+                        #min_price="ngModel" minlength="2" required [(ngModel)]="form_product.min_price">
+                        <label *ngIf="!min_price.valid && (min_price.dirty || min_price.touched || isSubmit)" 
+                        id="validation-min_price-error" 
+                        class="error jquery-validation-error small form-text invalid-feedback">Please enter a valid min price.</label>
                       </div>
                     </div>
                     <div class="col-lg-6">
                       <div class="form-group focused">
-                        <label class="form-control-label" for="input-last-name">Password Confirmation</label>
-                        <input type="text" id="input-last-name" class="form-control form-control-alternative" placeholder="Last name" value="Jesse">
+                        <label class="form-control-label" for="input-last-name">Giá mua ngay($) (Không bắt buộc)</label>
+                        <input type="text" id="input-last-name" class="form-control form-control-alternative" 
+                        name="buy_now_price"  
+                        [ngClass]="{'is-invalid': !buy_now_price.valid && (buy_now_price.dirty || buy_now_price.touched || isSubmit)}" 
+                        #buy_now_price="ngModel" minlength="2" required [(ngModel)]="form_product.buy_now_price">
+                        <label *ngIf="!buy_now_price.valid && (buy_now_price.dirty || buy_now_price.touched || isSubmit)" 
+                        id="validation-buy_now_price-error" 
+                        class="error jquery-validation-error small form-text invalid-feedback">Please enter a valid buy now price.</label>
+                      </div>
+                    </div>
+                    <div class="col-lg-6">
+                      <div class="form-group focused">
+                        <label class="form-control-label" for="input-last-name">Danh mục</label>                        
+                        <select class="mr-2 form-control" >
+                          <option *ngFor="let category of categories" (change)="select(category.name)">
+                            {{category.name}}
+                          </option>
+                          
+                      </select>
+                      </div>
+                    </div>
+                    <div class="col-lg-6">
+                      <div class="form-group focused">
+                        <label class="form-control-label" for="input-last-name">Mô tả cho sản phẩm</label>                        
+                        <ejs-richtexteditor [(value)]='value'  ></ejs-richtexteditor>      
+                      </div>
+                    </div>
+                    <div class="col-lg-6">
+                      <div class="form-group focused">
+                        <label class="form-control-label" for="input-last-name">Kết thúc</label>                        
+                        <input type="date" id="input-last-name" class="form-control form-control-alternative"
+                         (change)="date_bid($event.target)" >
+                      </div>
+                    </div>
+                    <div class="col-lg-6">
+                      <div class="form-group focused">
+                        <label class="form-control-label" for="input-last-name">Tự động gia hạn sản phẩm</label>                        
+                        <input type="checkbox" class="custom" id="input-last-name"  (change)="checked($event.target)">
                       </div>
                     </div>
                   </div>
                 </div>
-                <h6 class="heading-small text-muted mb-4">Product Images</h6>
+                <h6 class="heading-small text-muted mb-4">Hỉnh ảnh của sản phẩm</h6>
                 <div class="row">
+                  <div *ngIf="loading">
+                    <div class="preloader3" style=" 
+                    position:fixed;
+                    bottom: 50%;
+                    right: 50%">
+                      <div class="circ1"></div>
+                      <div class="circ2"></div>
+                      <div class="circ3"></div>
+                      <div class="circ4"></div>
+                    </div>
+                  </div>
                     <div class="col-md-3">
-                      <div class="sub-title">Drag & Drop</div>
-                     
-                      <div
-                        ng2FileDrop
-                        class="well ngb-drop-zone text-center ripple light">
-                        Drag & Drop files here
-                      </div>
-          
-                      <div class="sub-title">Multiple File</div>
-                      <label class="custom-file mb-3">
-                        <input type="file" ng2FileSelect  multiple class="custom-file-input">
-                        <span class="custom-file-control"></span>
-                      </label>
           
                       <div class="sub-title">Single File</div>
                       <label class="custom-file">
-                        <input type="file" ng2FileSelect  class="custom-file-input">
+                        <input type="file" (change)="validateFiles($event)" accept="image/*" >
+
                         <span class="custom-file-control"></span>
                       </label>
                     </div>
           
                     <div class="col-md-9">
-                      <div class="sub-title">Upload Queue</div>
-                      <p>Queue length: </p>
+                      <div class="sub-title">Sản phẩm phải có ít nhất 3 hình ảnh minh họa</div>
                       <div class="table-responsive">
                         <table class="table">
                           <thead>
                           <tr>
-                            <th width="50%">Name</th>
-                            <th>Size</th>
-                            <th>Progress</th>
-                            <th>Status</th>
-                            <th>Actions</th>
+                            <th width="50%">Tên</th>
+                            <th>Kích thước</th>
+                            <th>Tùy chọn khác</th>
                           </tr>
                           </thead>
                           <tbody>
-                          <tr>
-                            <td><strong></strong></td>
-                            <td  nowrap></td>
-                            <td >
-                              <div class="progress" style="margin-bottom: 0;">
-                                <div class="progress-bar" role="progressbar" ></div>
-                              </div>
+                          <tr *ngFor ="let file of file_array; index as i">
+                            <td><strong>
+                              {{file.name}}
+                            </strong></td>
+                            <td  nowrap>
+                              {{calculcate_file_size_name(file)}}
                             </td>
-                            <td class="text-center">
-                              <span ><i class="fa fa-check"></i></span>
-                              <span ><i class="fa fa-ban"></i></span>
-                              <span ><i class="fa fa-times"></i></span>
-                            </td>
+                           
                             <td nowrap>
-                              
-                            </td>
+                          <button type="button" class="btn btn-danger btn-xs"
+                                  (click)="remove(i)">
+                              <span class="glyphicon glyphicon-trash"></span> Xóa
+                      </button>
+                  </td>
                           </tr>
                           <tr>
                             <td colspan="5" class="text-center">
-                              <span>Your Uploaded Files</span>
+                              <span></span>
                             </td>
                           </tr>
                           </tbody>
                         </table>
                       </div>
-          
-                   
                     </div>
                   </div>
-                <div class="row justify-content-center">
+                <div class="row justify-content-end" *ngIf="file_array.length >= 3" >
+                  <div class="col-md-6">
+                    <button type="button" class="btn btn-primary"
+                    (click)="upload_img()"
+                    >
+                    <span class="glyphicon glyphicon-upload"></span> Upload tất cả
+                  </button>
+                  </div>
+                </div>
+                <div class="row justify-content-center mt-4" *ngIf="upload_file" >
                     <div class="col-md-6">
-                        <button type="submit" class="btn btn-primary" style="width:100%">
+                        <button type="submit" class="btn btn-primary" style="width:100%"
+                        (click)="save()">
                             Save
                         </button>
                     </div>

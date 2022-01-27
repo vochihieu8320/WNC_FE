@@ -1,5 +1,8 @@
-<article class="banner-wrap">
-  <img src="assets/images/slide_01.jpg" class="w-100 rounded">
+<article class="banner-wrap" style="text-align:center;">
+  <img src="https://thumbs.dreamstime.com/z/online-auction-concept-taking-action-device-banner-set-digital-bid-buy-art-flat-vector-illustration-144289300.jpg" 
+  class="w-100 rounded" style="height: 730px;
+  width: auto !important;
+  margin-top: 60px;">
 </article>
 <div id="preloader" *ngIf="loading">
   <div class="jumper">
@@ -20,10 +23,10 @@
 						<form method="post" class="signin-form mt-lg-5 mt-4"  #validationForm="ngForm" *ngIf="formSearch">
 							<div class="forms-gds">
 								<div class="form-input">
-									<input type="text" name="name" #name="ngModel" placeholder="Search for products or category" required
+									<input type="text" name="name" #name="ngModel" placeholder="Tìm kiếm theo tên sản phẩm hoặc danh mục" required
                   [(ngModel)]="formSearch.name">
 								</div>
-								<div class="form-input"><button class="btn" (click)="search()">Search</button></div>
+								<div class="form-input"><button class="btn" (click)="search()">Tìm Kiếm</button></div>
 							</div>
 						</form>
 					</div>
@@ -38,85 +41,88 @@
 <section class="w3l-grids-hny-2">
 	<div class="grids-hny-2-mian py-5">
 		<div class="container py-lg-5">
-			<h3 class="hny-title mb-0 text-center">Handpicked Favourites just for you</h3>
+			<h3 class="hny-title mb-0 text-center">Chọn Dạnh mục mà bạn thích nhất</h3>
 			<div class="welcome-grids row mt-5">
 				<div class="col-lg-2 col-md-4 col-6 welcome-image">
 						<div class="boxhny13">
-								<a href="#URL">
+								<a (click)="picked('bag')" style="cursor: pointer">
 										<img src="assets/images/grid1.jpg" class="img-fluid" alt="" />
 								<div class="boxhny-content">
 									<h3 class="title">Product</h3>
 								</div>
 							</a>
 						</div>
-						<h4><a href="#URL">Hand Bags</a></h4>
+						<h4><a (click)="picked('bag')" style="cursor: pointer">Túi Xách</a></h4>
 
 				</div>
 				
 				<div class="col-lg-2 col-md-4 col-6 welcome-image">
 						<div class="boxhny13">
-								<a href="#URL">
+								<a (click)="picked('watch')" style="cursor: pointer">
 										<img src="assets/images/grid3.jpg" class="img-fluid" alt="" />
 								<div class="boxhny-content">
 									<h3 class="title">Product</h3>
 								</div>
 							</a>
 						</div>
-						<h4><a href="#URL">
-								Watches</a></h4>
+						<h4><a (click)="picked('watch')" style="cursor: pointer">
+								Đồng Hồ</a></h4>
 
 					
 				</div>
 				<div class="col-lg-2 col-md-4 col-6 welcome-image">
 						<div class="boxhny13">
-								<a href="#URL">
+								<a (click)="picked('shoes')" style="cursor: pointer">
 										<img src="assets/images/grid2.jpg" class="img-fluid" alt="" />
 								<div class="boxhny-content">
 									<h3 class="title">Product</h3>
 								</div>
 							</a>
 						</div>
-						<h4><a href="#URL">Shoes</a></h4>
+						<h4><a (click)="picked('shoes')" style="cursor: pointer">Giày</a></h4>
 
 				
 				</div>
 				<div class="col-lg-2 col-md-4 col-6 welcome-image">
 						<div class="boxhny13">
-								<a href="#URL">
+								<a (click)="picked('clothes')" style="cursor: pointer">
 										<img src="assets/images/grid4.jpg" class="img-fluid" alt="" />
 								<div class="boxhny-content">
 									<h3 class="title">Product</h3>
 								</div>
 							</a>
 						</div>
-						<h4><a href="#URL">Suits</a></h4>
+						<h4><a (click)="picked('clothes')" style="cursor: pointer">Quần Áo</a></h4>
 
 				</div>
 				<div class="col-lg-2 col-md-4 col-6 welcome-image">
 						<div class="boxhny13">
-								<a href="#URL">
-										<img src="assets/images/grid5.jpg" class="img-fluid" alt="" />
+								<a (click)="picked('Electronics')" style="cursor: pointer">
+										<img src="assets/images/communicator-mockup-tablet-similar-ipad-260nw-306237590.jpg" class="img-fluid" alt="" 
+                    style="height: 158px" />
 								<div class="boxhny-content">
 									<h3 class="title">Product</h3>
 								</div>
 							</a>
 						</div>
-						<h4><a href="#URL">
-								Accessories</a></h4>
+						<h4><a (click)="picked('Electronics')" style="cursor: pointer"
+          >
+								Đồ Điện tử</a></h4>
 
 					
 				</div>
 				<div class="col-lg-2 col-md-4 col-6 welcome-image">
 						<div class="boxhny13">
-								<a href="#URL">
-										<img src="assets/images/grid6.jpg" class="img-fluid" alt="" />
+								<a (click)="picked('picture')" style="cursor: pointer">
+										<img src="assets/images/tranh-co-dong-1-6850-1632323555.jpg" class="img-fluid" alt="" 
+                    style="height: 158px"/>
 								<div class="boxhny-content">
 									<h3 class="title">Product</h3>
 								</div>
 							</a>
 						</div>
-						<h4><a href="#URL">
-								Fragrances</a></h4>
+						<h4><a  (click)="picked('picture')" style="cursor: pointer" >
+								Tranh</a></h4>
 
 					
 				</div>
@@ -131,7 +137,7 @@
     <div class="row">
       <div class="col-md-12">
         <div class="section-heading">
-          <h2>Hot trends</h2>
+          <h2>Được nhiều người ra giá nhất</h2>
           
         </div>
       </div>
@@ -147,10 +153,10 @@
           <div class="down-content">
             <a href="#"><h4>{{product.name}}</h4></a>
             <h6>{{product.auction.min_price}}$</h6>
-            <p>{{product.auction.amount_bider_bide}} Bids </p>
-            <p>Ended At: {{product.createdAt| date:'short'}}</p>
+            <p>{{product.auction.amount_bider_bide}} Lượt đấu giá </p>
+            <p>Hết hạn: {{product.createdAt| date:'short'}}</p>
               <div class="col-md-12 text-center">
-                <a class="btn" (click)="view(product._id)" style="color:white">Bide Now</a>
+                <a class="btn" (click)="view(product._id)" style="color:white">Đấu giá</a>
               </div>          
           </div>
         </div>
@@ -164,7 +170,7 @@
     <div class="row">
       <div class="col-md-12">
         <div class="section-heading">
-          <h2>Best Price</h2>
+          <h2>Giá trị nhất</h2>
         </div>
       </div>
       <div class="col" *ngFor="let product of best_price">
@@ -178,10 +184,10 @@
           <div class="down-content">
             <a href="#"><h4>{{product.name}}</h4></a>
             <h6>{{product.auction.min_price}}$</h6>
-            <p>{{product.auction.amount_bider_bide}} Bids </p>
-            <p>Ended At: {{product.createdAt| date:'short'}}</p>
+            <p>{{product.auction.amount_bider_bide}} Lượt đấu giá </p>
+            <p>Hết hạn: {{product.createdAt| date:'short'}}</p>
               <div class="col-md-12 text-center">
-                <a class="btn" (click)="view(product._id)" style="color:white">Bide Now</a>
+                <a class="btn" (click)="view(product._id)" style="color:white">Đấu giá ngay</a>
               </div>          
           </div>
         </div>
@@ -195,7 +201,7 @@
     <div class="row">
       <div class="col-md-12">
         <div class="section-heading">
-          <h2>Last Minute</h2>
+          <h2>Sắp kết thúc</h2>
         </div>
       </div>
       <div class="col" *ngFor="let product of last_minute">
@@ -211,10 +217,10 @@
             <a href="#"><h4>{{product.name}}</h4></a>
             <h6>{{product.auction.min_price}}$</h6>
 
-            <p>{{product.auction.amount_bider_bide}} Bids </p>
-            <p>Ended At: {{product.createdAt| date:'short'}}</p>
+            <p>{{product.auction.amount_bider_bide}} Lượt đấu giá </p>
+            <p> Hết hạn: {{product.createdAt| date:'short'}}</p>
               <div class="col-md-12 text-center">
-                <a class="btn" (click)="view(product._id)" style="color:white">Bide Now</a>
+                <a class="btn" (click)="view(product._id)" style="color:white">Đấu giá </a>
               </div>          
           </div>
         </div>

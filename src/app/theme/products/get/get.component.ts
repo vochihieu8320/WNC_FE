@@ -14,6 +14,7 @@ export class GetComponent implements OnInit {
   last_minute: any;
   hot_trends: any;
   loading: boolean = false;
+  categories: any;
   constructor(private service: ProductService, private router: Router, private route: ActivatedRoute) {
   
   }
@@ -29,8 +30,10 @@ export class GetComponent implements OnInit {
      const auction = await this.service.auction(this.last_minute[i]._id);
      this.last_minute[i]["auction"] = auction
     }
-    console.log(this.last_minute)
+  
     this.best_price = <any> await this.service.best_price();
+
+    //get categories
     this.loading = false;
   }
 
@@ -50,4 +53,10 @@ export class GetComponent implements OnInit {
  view(productID: any){
   this.router.navigate([`products/${productID}`]);
  }
+ picked(value: any){
+  this.router.navigate(
+    ['/products/search'],
+    { queryParams: { category: value } }
+  );
+}
 }

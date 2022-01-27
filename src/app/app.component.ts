@@ -1,17 +1,28 @@
 import { Component } from '@angular/core';
 import { Router, ActivatedRoute} from '@angular/router';
-import {AuthService} from './service/auth/auth.service'
+import {AuthService} from './service/auth/auth.service';
+import {ProductService} from './service/product/product.service';
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  title = 'BookStore';
+  title = 'Online Auction';
+  categories: any;
+  user_type:any;
   constructor(private router: Router, private route: ActivatedRoute,
+    private service: ProductService,
     private authService: AuthService)
   {
+    const local = <any> localStorage.getItem("currentUser");
+    if(local) {
+      this.user_type = JSON.parse(local)["user_type"];
+    }
+  }
 
+  async ngOnInit() {
+    this.categories = await this.service.all_categories();
   }
   checkorder()
   {
@@ -36,5 +47,11 @@ export class AppComponent {
   logout(){
     this.authService.logout();
     this.router.navigate([`auth/login`]);
+  }
+
+  search(name: any)
+  {
+    this.router.navigate( ['/products/search'],
+    { queryParams: { category: name } });
   }
 }

@@ -172,4 +172,22 @@ export class ProductService {
     await this.CreateHeader();
     return this.http.get(`${environment.apiUrl}/features/${productID}`, {headers: this.Header}).toPromise();
   }
+
+  async upload_file(body:any)
+  {
+    await this.CreateHeader();
+    return this.http.post(`${environment.apiUrl}/uploads`, body, {headers: this.Header}).toPromise();
+  }
+
+  async create_product(body:any)
+  {
+    await this.CreateHeader();
+    return this.http.post(`${environment.apiUrl}/products`, body, {headers: this.Header}).toPromise();    
+  }
+
+  async all_categories()
+  {
+    await this.CreateHeader();
+    return this.http.get(`${environment.apiUrl}/categories`, {headers: this.Header}).toPromise();    
+  }
 }

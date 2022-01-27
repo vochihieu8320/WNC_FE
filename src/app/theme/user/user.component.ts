@@ -19,8 +19,8 @@ export class UserComponent implements OnInit {
   isSubmit:boolean = false;
   products:any;
   totalItems: number = 10
-  pagesize : number = 6;
-  maxSize :number = 4;
+  pagesize : number = 5;
+  maxSize :number = 10;
   currentPage: number = 0;
   winners:any;
   comments:any;
@@ -51,8 +51,10 @@ export class UserComponent implements OnInit {
     console.log(this.user_type)
     const result = <any> await this.userService.show(this.userID);
     const result_comment = <any> await this.userService.get_comments(this.userID, 0, 5);
+    console.log(result_comment)
     this.comments = result_comment.data;
     this.totalItems_comment = result_comment.count;
+    console.log(this.totalItems_comment)
     this.current_user = result.data;
     
     this.current_user_rating = (+result.rating / 2) || 5;
@@ -79,7 +81,6 @@ export class UserComponent implements OnInit {
       //winer list
       const winner_temp = <any> await this.service.user_winner_list(this.userID, 0, 5);
       this.user_winning_list = winner_temp.data;
-      console.log(this.user_winning_list);
       this.totalItems_userWinning = winner_temp.count;
     }
     else
@@ -160,6 +161,7 @@ export class UserComponent implements OnInit {
         {
           const result = <any> await this.service.sellerProduct(this.userID, skip, 5);
           this.products = result.data;
+          console.log(this.products)
         }
         break;
       case "reviews":
@@ -247,6 +249,45 @@ export class UserComponent implements OnInit {
    
   }
 
+  async reject_auction(product:any)
+  {
+    Swal.fire({
+      title: 'Bạn có chắc chắc muốn hủy giao dịch?',
+      showCancelButton: true,
+      confirmButtonText: 'Save',
+      denyButtonText: `Don't save`,
+    }).then(async(result) => {
+      /* Read more about isConfirmed, isDenied below */
+      if (result.isConfirmed) {
+         try {
+        this.loading =true;
+        const body = { 
+          userID: product.user[0]._id,
+          productID: product._id
+        }
+        await this.service.rejectBide(body);
+
+        const dislike = {
+          like: 0
+        }
+        await this.userService.like(product.user[0]._id, dislike);
+        const comment = {
+          userID: product.user[0]._id,
+          message: "Người chơi không thanh toán",
+          ownerID: this.userID
+        }
+        await this.userService.commented(comment)
+        this.loading = false;
+      } catch (error) {
+        this.loading =false;
+        console.log(error)
+      }
+          Swal.fire('Saved!', '', 'success')
+      } else if (result.isDenied) {
+        Swal.fire('Saved!', '', 'info')
+      }
+    })
+  }
   async like(user:any)
   {
     Swal.fire({
@@ -262,14 +303,20 @@ export class UserComponent implements OnInit {
         const body = {
           like: 1
         }
-        await this.userService.like(user._id, body);
-        const comment = {
-          userID: user._id,
-          message: message,
-          ownerID: this.userID
+        try {
+          await this.userService.like(user._id, body);
+          const comment = {
+            userID: user._id,
+            message: message,
+            ownerID: this.userID
+          }
+          const result = await this.userService.commented(comment);
+          return true    
+        } catch (error) {
+          console.log(error);
+          return false
         }
-        await this.userService.commented(comment);
-        return true
+      
       },
       allowOutsideClick: () => !Swal.isLoading()
     }).then((result) => {
@@ -368,5 +415,15 @@ export class UserComponent implements OnInit {
         Swal.fire('Saved!', '', 'info')
       }
     })
+  }
+
+  product_detail(productID: any)
+  {
+
+  }
+
+  validateFiles(value: any)
+  {
+    
   }
 }

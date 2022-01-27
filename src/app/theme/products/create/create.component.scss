@@ -1,3 +1,7 @@
+@import "~quill/dist/quill.core.css";
+@import "~quill/dist/quill.bubble.css";
+@import "~quill/dist/quill.snow.css";
+
 :root {
     --blue: #5e72e4;
     --indigo: #5603ad;
@@ -1967,4 +1971,108 @@
   }
 }
 
+.preloader3 {
+  width: auto;
+  height: 130px;
+  text-align: center;
+  font-size: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  > div {
+      margin: 2px;
+      background-color: blueviolet;
+      height: 10px;
+      width: 10px;
+      border-radius: 50%;
+      display: inline-block;
+      -webkit-animation: stretchdelay 0.7s infinite ease-in-out;
+      animation: stretchdelay 0.7s infinite ease-in-out;
+  }
+  .circ2 {
+      -webkit-animation-delay: -0.6s;
+      animation-delay: -0.6s;
+  }
+  .circ3 {
+      -webkit-animation-delay: -0.5s;
+      animation-delay: -0.5s;
+  }
+  .circ4 {
+      -webkit-animation-delay: -0.4s;
+      animation-delay: -0.4s;
+  }
+  .circ5 {
+      -webkit-animation-delay: -0.3s;
+      animation-delay: -0.3s;
+  }
+  .loader-md {
+      height: 13px;
+      width: 13px;
+  }
+  .loader-lg {
+      height: 18px;
+      width: 18px;
+  }
+}
 
+@-webkit-keyframes stretchdelay {
+  0%,
+  40%,
+  100% {
+      -webkit-transform: translateY(-10px)
+  }
+  20% {
+      -webkit-transform: translateY(-20px)
+  }
+}
+
+@keyframes stretchdelay {
+  0%,
+  40%,
+  100% {
+      transform: translateY(-10px);
+      -webkit-transform: translateY(-10px);
+  }
+  20% {
+      transform: translateY(-20px);
+      -webkit-transform: translateY(-20px);
+  }
+}
+
+@keyframes rotateColor {
+  0% {
+      border-top-color: #1b8bf9;
+  }
+  12.5% {
+      border-bottom-color: rgba(27, 139, 249, 0.8);
+  }
+  25% {
+      border-bottom-color: rgba(27, 139, 249, 0.6);
+  }
+  37.5% {
+      border-bottom-color: rgba(27, 139, 249, 0.4);
+  }
+  50% {
+      border-bottom-color: rgba(27, 139, 249, 0.6);
+  }
+  50.00001% {
+      border-bottom-color: #1b8bf9;
+  }
+  62.5% {
+      border-bottom-color: rgba(27, 139, 249, 0.8);
+  }
+  75% {
+      border-bottom-color: rgba(27, 139, 249, 0.6);
+  }
+  87.5% {
+      border-bottom-color: rgba(27, 139, 249, 0.4);
+  }
+}
+
+input.custom{
+  width: 17px;
+  height: 40px;
+  position: relative;
+  top: 16px;
+  left: 10px;
+}

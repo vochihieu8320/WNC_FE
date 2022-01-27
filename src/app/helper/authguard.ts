@@ -13,6 +13,7 @@ export class AuthGuard implements CanActivate {
 
   async canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
     const result =<any> await this.authenticationService.checkLoggin();
+    console.log(result);
     if (result) {
       return true;
     } else {

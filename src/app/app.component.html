@@ -2,36 +2,31 @@
  <header>
   <nav>
     <div class="row justify-content-center">
-      <div class="col-md-4">
-        <a class="navbar-brand" href="index.html"><h2>Sixteen <em>Clothing</em></h2></a>
+      <div class="col-md-6">
+        <a class="navbar-brand" href="index.html"><h2>Online <em>Auction</em></h2></a>
       </div>
       <div class="col-md-4" style="margin-left: 20px;">
         <ul class="main-navigation">
-          <li><a href="#">Home</a></li>
-          <li><a href="#">Category</a>
+          <li><a href="/">Trang chủ</a></li>
+          <li><a>Danh mục</a>
             <ul>
-              <li><a href="#">HTML</a></li>
-              <li><a href="#">CSS</a>
-                <ul>
-                  <li><a href="#">Resets</a></li>
-                  <li><a href="#">Grids</a></li>
-                  <li><a href="#">Frameworks</a></li>
-                </ul>
-              </li>
-              <li><a href="#">JavaScript</a>
-                <ul>
-                  <li><a href="#">Ajax</a></li>
-                  <li><a href="#">jQuery</a></li>
+              <li *ngFor="let category of categories">
+                <a (click)="search(category.name)" style="cursor: pointer;">{{category.name}}</a>
+                <ul *ngIf="category.childs.length > 0">
+                  <li *ngFor="let child of category.childs">
+                    <a (click)="search(child.name)" style="cursor: pointer;">{{child.name}}</a>
+                  </li>
+                
                 </ul>
               </li>
             </ul>
           </li>
-          <li><a href="#">Become a Seller</a></li>
-          <li><a href="#">Account</a>
+          <li><a href="/become-seller" *ngIf="user_type == 1">Trờ nhành seller</a></li>
+          <li><a href="#">Tài khoản</a>
             <ul>
-              <li *ngIf="!islogin()"><a (click)="login()" style="cursor: pointer;">Login</a></li>
-              <li *ngIf="islogin()"><a style="cursor: pointer;" (click)="logout()">Logout</a></li>
-              <li><a (click)="user()" style="cursor: pointer;">Your Profile</a>
+              <li *ngIf="!islogin()"><a (click)="login()" style="cursor: pointer;">Đăng nhập</a></li>
+              <li *ngIf="islogin()"><a style="cursor: pointer;" (click)="logout()">Đăng xuất</a></li>
+              <li><a (click)="user()" style="cursor: pointer;">Thông tin cá nhân</a>
               </li>
             </ul>
           </li>

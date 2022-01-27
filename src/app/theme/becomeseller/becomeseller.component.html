@@ -1,0 +1,64 @@
+
+    <div class="find-us">
+        <div class="container">
+          <div class="row">
+            <div class="col-md-12">
+              <div class="section-heading">
+                <h2>Our Location on Maps</h2>
+              </div>
+            </div>
+            <div class="col-md-8">
+  <!-- How to change your own map point
+      1. Go to Google Maps
+      2. Click on your location point
+      3. Click "Share" and choose "Embed map" tab
+      4. Copy only URL and paste it within the src="" field below
+  -->
+              <div id="map">
+                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3919.630773293551!2d106.67998301471832!3d10.762912992330723!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x31752f1c06f4e1dd%3A0x43900f1d4539a3d!2zVHLGsOG7nW5nIMSQ4bqhaSBo4buNYyBLaG9hIGjhu41jIFThu7Egbmhpw6puIC0gxJDhuqFpIGjhu41jIFF14buRYyBnaWEgVFAuSENN!5e0!3m2!1svi!2s!4v1643107660792!5m2!1svi!2s" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy"></iframe>              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="left-content">
+                <h4>About our office</h4>
+                <p>Lorem ipsum dolor sit amet, consectetur adipisic elit. Sed voluptate nihil eumester consectetur similiqu consectetur.<br><br>Lorem ipsum dolor sit amet, consectetur adipisic elit. Et, consequuntur, modi mollitia corporis ipsa voluptate corrupti.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+  
+      
+      <div class="send-message">
+        <div class="container">
+          <div class="row">
+            <div class="col-md-12">
+              <div class="section-heading">
+                <h2>Send us a Message</h2>
+              </div>
+            </div>
+            <div class="col-md-8">
+              <div class="contact-form">
+                <form id="contact"  #validationForm="ngForm" *ngIf="formRequest">
+                  <div class="row">
+                    <div class="col-lg-12">
+                      <fieldset>
+                        <textarea name="message" rows="6" class="form-control" id="message" placeholder="Your Message" required=""
+                        name="content"  
+                        [ngClass]="{'is-invalid': !content.valid && (content.dirty || content.touched || isSubmit)}" 
+                        #content="ngModel" minlength="6" required [(ngModel)]="formRequest.content"></textarea>
+                      </fieldset>
+                    </div>
+                    <div class="col-lg-12">
+                      <fieldset>
+                        <button type="submit" id="form-submit" class="filled-button"
+                        (click)="save()">Send Message</button>
+                      </fieldset>
+                    </div>
+                  </div>
+                </form>
+              </div>
+            </div>
+           
+          </div>
+        </div>
+      </div>

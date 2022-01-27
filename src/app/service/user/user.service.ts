@@ -82,4 +82,20 @@ export class UserService {
     await this.CreateHeader();
     return this.http.get(`${environment.apiUrl}/feedbacks?userID=${userID}&skip=${skip}&limit=${limit}`, {headers: this.Header}).toPromise();  
   }
+
+  async bider_seller(body:any)
+  {
+    await this.CreateHeader();
+    return this.http.post(`${environment.apiUrl}/inboxes`, body, {headers: this.Header}).toPromise();  
+  }
+
+  async forgotPassword(body:any)
+  {
+    return this.http.post(`${environment.apiUrl}/users/forgot-pwd`, body).toPromise();  
+  }
+
+  async check_forgot_pwd(body:any)
+  {
+    return this.http.patch(`${environment.apiUrl}/users/forgot-pwd`, body).toPromise();  
+  }
 }

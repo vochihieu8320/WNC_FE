@@ -1,33 +1,4 @@
-.products ul.pages {
-    margin-top: 30px;
-    text-align: center;
-}
-
-.products ul.pages li {
-    display: inline-block;
-    margin: 0px 2px;
-}
-
-.products ul.pages li a {
-    width: 44px;
-    height: 44px;
-    display: inline-block;
-    line-height: 42px;
-    border: 1px solid #eee;
-    font-size: 15px;
-    font-weight: 700;
-    color: #121212;
-    transition: all .3s;
-}
-
-.products ul.pages li a:hover,
-.products ul.pages li.active a {
-    background-color: #f33f3f;
-    border-color: #f33f3f;
-    color: #fff;
-}
-
-preloader3 {
+.preloader3 {
     width: auto;
     height: 130px;
     text-align: center;
@@ -71,3 +42,20 @@ preloader3 {
     }
 }
 
+.btn {
+    height: 45px;
+    width: auto;
+    padding: 0 42px;
+    line-height: 45px;
+    text-align: center;
+    text-transform: capitalize;
+    margin-right: 5px;
+    border-radius: 0px;
+    background: #333;
+    color: #fff;
+    display: inline-block;
+    font-weight: 500;
+}
+.btn:hover {
+    background: #ff7315;
+  }

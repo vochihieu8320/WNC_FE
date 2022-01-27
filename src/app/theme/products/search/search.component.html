@@ -14,12 +14,16 @@
             </header>
             <div class="filter-content collapse show" id="collapse_1" >
                 <div class="card-body">
-                    <form class="pb-3">
+                    <form class="pb-3" #validationForm="ngForm" *ngIf="formSearch">
                     <div class="input-group">
-                      <input type="text" class="form-control" placeholder="Search">
+                      <input type="text" class="form-control" placeholder="Search"
+                      name="name"  
+                      [ngClass]="{'is-invalid': !name.valid && (name.dirty || name.touched || isSubmit)}" 
+                      #name="ngModel" minlength="1" required [(ngModel)]="formSearch.name">
                       <div class="input-group-append">
                         <button class="btn btn-light" type="button" style="position: relative;
-                        top: -3px;"><i class="fa fa-search"></i></button>
+                        top: -3px;" (click)="search()">
+                        <i class="fa fa-search"></i></button>
                       </div>
                     </div>
                     </form>
@@ -48,7 +52,7 @@
             <div class="filter-content collapse show" id="collapse_3">
                 <div class="card-body">
                   
-                    <button class="btn btn-block btn-primary" (click)="apply()">Apply</button>
+                    <a class="btn"style="color: white; background-color:#333" (click)="apply()">Apply</a>
                 </div><!-- card-body.// -->
             </div>
         </article> <!-- filter-group .// -->
@@ -87,15 +91,15 @@
                     <img src={{product.img}}>
                     <a class="btn-overlay" href="#"><i class="fa fa-search-plus"></i> Quick view</a>
                 </div> <!-- img-wrap.// -->
-                <figcaption class="info-wrap">
+                <figcaption class="info-wrap text-center">
                     <div class="fix-height">
                         <a href="#" class="title">{{product.name}}</a>
                         <div class="price-wrap mt-2">
                             <span class="price">{{product.price}}$</span>
                         </div> <!-- price-wrap.// -->
-                        <p>{{product.date_bid}}</p>
+                        <p>Hết Hạn: {{product.date_bid}}</p>
                     </div>
-                    <a href="#" class="btn btn-block btn-primary" style="color: white">Bide Now</a>
+                    <a (click)="bide(product._id)" class="btn" style="color: white; background-color:#333">Đấu giá ngay</a>
                 </figcaption>
             </figure>
         </div> 
